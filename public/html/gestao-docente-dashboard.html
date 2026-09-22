@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Docente — Visão Geral</title>
+    <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg">
+    <link rel="stylesheet" href="/css/gestao-docente.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="gd-shell">
+        <div id="gdSidebarMount"></div>
+
+        <main class="gd-main">
+            <div id="gdHeaderMount"></div>
+
+            <div class="gd-content">
+                <section class="gd-filter-card" aria-labelledby="filtersTitle">
+                    <div class="gd-mobile-section-title"><h2 id="filtersTitle">Filtros</h2></div>
+                    <form id="dashboardFilters" class="gd-filter-grid">
+                        <label><span>Unidade</span><select id="filterUnit"><option value="">Todas as unidades</option></select></label>
+                        <label><span>Período</span><select id="filterPeriod">
+                            <option value="current-month">Mês atual</option>
+                            <option value="current-week">Semana atual</option>
+                            <option value="next-week">Próxima semana</option>
+                            <option value="custom">Personalizado</option>
+                        </select></label>
+                        <label><span>Curso</span><select id="filterCourse"><option value="">Todos os cursos</option></select></label>
+                        <label><span>Turma</span><select id="filterClass"><option value="">Todas as turmas</option></select></label>
+                        <label><span>Unidade Curricular</span><select id="filterUc"><option value="">Todas as UCs</option></select></label>
+                        <label><span>Professor</span><select id="filterProfessor"><option value="">Todos os professores</option></select></label>
+                        <label><span>Situação acadêmica</span><select id="filterStatus">
+                            <option value="">Todas</option>
+                            <option value="CRITICO">Crítico</option>
+                            <option value="ATENCAO">Atenção</option>
+                            <option value="ADEQUADO">Adequado</option>
+                            <option value="COM_EXCESSO">Com excesso</option>
+                            <option value="LEGADO_NAO_CLASSIFICADO">Sem classificação acadêmica</option>
+                        </select></label>
+                        <div class="gd-filter-action"><button id="clearFilters" class="gd-button gd-button-outline" type="button"><i class="fas fa-filter-circle-xmark"></i> Limpar filtros</button></div>
+                        <div id="customDates" class="gd-custom-dates is-hidden">
+                            <label><span>Data inicial</span><input id="filterStart" type="date"></label>
+                            <label><span>Data final</span><input id="filterEnd" type="date"></label>
+                            <button class="gd-button gd-button-primary" type="submit">Aplicar período</button>
+                        </div>
+                    </form>
+                </section>
+
+                <div id="screenMessage" class="gd-message is-hidden" role="alert"></div>
+                <div id="loadingState" class="gd-loading"><span class="gd-spinner"></span><p>Carregando indicadores da Gestão Docente...</p></div>
+
+                <div id="dashboardContent" class="is-hidden">
+                    <section class="gd-kpi-grid" aria-label="Indicadores principais">
+                        <article class="gd-kpi"><span class="gd-kpi-icon is-blue"><i class="far fa-calendar-check"></i></span><button class="gd-info" title="Soma uma carga por planejamento.">i</button><div><span>Horas previstas</span><strong id="kpiExpected">0h</strong><small><b id="kpiActivePlans">0</b> planejamentos ativos</small></div></article>
+                        <article class="gd-kpi"><span class="gd-kpi-icon is-green"><i class="far fa-clock"></i></span><button class="gd-info" title="Soma das durações dos fatos ativos.">i</button><div><span>Horas agendadas</span><strong id="kpiScheduled">0h</strong><small>Somente agendamentos <b>ATIVOS</b></small></div></article>
+                        <article class="gd-kpi"><span class="gd-kpi-icon is-amber"><i class="fas fa-hourglass-half"></i></span><button class="gd-info" title="Déficits são calculados por planejamento e nunca ficam negativos.">i</button><div><span>Horas faltantes</span><strong id="kpiMissing">0h</strong><small><b id="kpiPendingPlans">0</b> planejamentos com pendência</small></div></article>
+                        <article class="gd-kpi"><span class="gd-kpi-icon is-red"><i class="fas fa-arrow-trend-up"></i></span><button class="gd-info" title="Horas acima da carga vigente dos planejamentos.">i</button><div><span>Horas em excesso</span><strong id="kpiExcess">0h</strong><small>Em planejamentos com excesso</small></div></article>
+                        <article class="gd-kpi"><span class="gd-kpi-icon is-purple"><i class="fas fa-chart-pie"></i></span><button class="gd-info" title="Horas agendadas divididas pelas horas previstas.">i</button><div><span>Cobertura geral</span><strong id="kpiCoverage">0%</strong><small><span id="coverageHint">Sem carga prevista</span></small><span class="gd-progress"><i id="coverageProgress"></i></span></div></article>
+                    </section>
+
+                    <section id="gdManagerialGrid" class="gd-chart-grid">
+                        <article class="gd-panel">
+                            <div class="gd-panel-header"><div><h2>Horas por situação dos planejamentos</h2><p>Quantidade e proporção por classificação gerencial.</p></div></div>
+                            <div id="situationChart" class="gd-coverage-chart"></div>
+                        </article>
+                        <article class="gd-panel">
+                            <div class="gd-panel-header"><div><h2>Cobertura por unidade</h2><p>Horas agendadas em relação às horas previstas.</p></div></div>
+                            <div id="unitCoverageChart" class="gd-unit-bars"></div>
+                        </article>
+                        <article class="gd-panel gd-alert-panel">
+                            <div class="gd-panel-header"><div><h2>Alertas e destaques</h2><p>Selecione um alerta para aplicar o filtro correspondente.</p></div></div>
+                            <div id="dashboardAlerts" class="gd-alert-list"></div>
+                        </article>
+                    </section>
+
+                    <section id="legacyNotice" class="gd-legacy is-hidden">
+                        <i class="fas fa-circle-info"></i>
+                        <div><strong><span id="legacyHours">0h</span> sem classificação acadêmica</strong><p><span id="legacyCount">0</span> ocorrência(s) antiga(s) entram nas horas do professor, mas não na cobertura acadêmica.</p></div>
+                    </section>
+
+                    <section id="pendingUcSection" class="gd-lower-grid">
+                        <article class="gd-panel gd-table-panel">
+                            <div class="gd-panel-header"><div><h2>UCs com maior pendência</h2><p>Priorizadas pelo maior volume de horas ainda não agendadas.</p></div></div>
+                            <div class="gd-table-scroll"><table>
+                                <thead><tr><th>UC</th><th>Curso</th><th>Turma</th><th>Previsto</th><th>Agendado</th><th>Faltam</th><th>Cobertura</th></tr></thead>
+                                <tbody id="pendingUcTable"></tbody>
+                            </table></div>
+                        </article>
+                        <article class="gd-panel gd-table-panel">
+                            <div class="gd-panel-header"><div><h2>Últimas ocorrências</h2><p>Eventos disponíveis nas estruturas atuais.</p></div></div>
+                            <div class="gd-table-scroll"><table>
+                                <thead><tr><th>Data/Hora</th><th>Ocorrência</th><th>Responsável</th><th>Detalhes</th></tr></thead>
+                                <tbody id="occurrencesTable"></tbody>
+                            </table></div>
+                        </article>
+                    </section>
+
+                    <div id="partialPeriodNotice" class="gd-period-note is-hidden"><i class="fas fa-circle-info"></i><span>Período parcial selecionado. Indicadores de utilização docente exigirão uma regra de distribuição diária da carga semanal.</span></div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="/js/gestao-docente-common.js"></script>
+    <script src="/js/gestao-docente-dashboard.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+</html>

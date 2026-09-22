@@ -1,0 +1,92 @@
+/* Visual overrides exclusive to the room-viewing index. */
+.index-modern { font-family:'Segoe UI',Arial,sans-serif; background-color:#06468c; }
+.index-modern * { box-sizing:border-box; }
+.index-modern::before { background:linear-gradient(120deg,rgba(1,34,77,.2),rgba(0,58,134,.08),rgba(0,30,70,.3)); }
+.index-modern header { margin:10px 12px 0; padding:10px 14px; border-radius:12px; background:#092744; box-shadow:0 7px 22px #00172f26; }
+.index-modern header nav { max-width:none; background-color:#092744; }
+.index-modern .menuToggle { justify-content:flex-start; gap:10px; }
+.index-modern header a { font-size:13px; padding:10px 14px; border-radius:8px; }
+.index-modern .menuToggle .menu-trigger { margin:0 10px 0 0; padding:10px 14px; border:1px solid #ffffff50; border-radius:8px; background:#ffffff08; }
+.index-modern :focus-visible { outline:3px solid #37b6ff; outline-offset:3px; }
+.index-modern .info-geral { margin:clamp(38px,9vh,100px) auto 24px; padding:0 20px; width:100%; max-width:1000px; }
+.index-modern .index-kicker { font-size:12px; letter-spacing:4px; color:#d6e7ff; font-weight:400; }
+.index-modern .nav-title { margin:12px 0 0; font-size:clamp(28px,4vw,50px); letter-spacing:.02em; font-weight:800; line-height:1.2; }
+.index-modern .nav-title::after { content:''; display:block; width:52px; height:5px; background:#0098ff; border-radius:3px; margin:20px auto; }
+.index-modern .info-geral p { margin:16px 0 0; min-height:3em; line-height:1.5; }
+.index-modern .info-geral p,.index-modern #frase-dinamica { font-size:clamp(16px,1.5vw,20px); font-weight:500; }
+.index-modern .main-container { max-width:1680px; padding:0 24px 28px; gap:18px; }
+.index-modern .sidebar { top:90px; bottom:20px; height:auto; width:290px; max-width:calc(100vw - 28px); left:-330px; padding:20px 14px; border-radius:12px; background:#f1f7fffa; box-shadow:0 10px 30px #001c4933; scrollbar-width:thin; scrollbar-color:#93b6de transparent; visibility:hidden; transition:left .2s ease,visibility .2s; }
+.index-modern .sidebar.active { left:14px; visibility:visible; }
+.index-modern .sidebar-title { font-size:17px; line-height:1.4; }
+.index-modern .sidebar-subtitle { font-size:15px; margin:22px 0 10px; }
+.index-modern .sidebar-title::before,.index-modern .sidebar-subtitle::before { content:'\f1ad'; font-family:'Font Awesome 6 Free'; font-weight:900; margin-right:9px; color:#006fe8; }
+.index-modern #unidadeSelect,.index-modern #programaFilter { margin:0; min-height:40px; border:1px solid #d1deed; border-radius:6px; background:white; color:#203c60; font:inherit; font-size:13px; padding:9px; }
+.index-modern #salasButtons button { position:relative; display:flex; align-items:center; gap:12px; margin:0; padding:11px 12px; text-align:left; background:transparent; color:#153b6d; border-bottom:1px solid #deebf9; border-radius:5px; font:inherit; font-size:13px; }
+.index-modern #salasButtons button::before { content:'\f52b'; font-family:'Font Awesome 6 Free'; font-weight:900; }
+.index-modern #salasButtons button:hover { background:#dfedff; }
+.index-modern #salasButtons button.is-selected { background:linear-gradient(90deg,#003979,#075cbb); color:white; }
+.index-modern #salaInfo { margin:0; min-width:0; padding:18px; border-radius:13px; background:#eef6fffa; box-shadow:0 12px 36px #00214b33; font-family:inherit; }
+.index-modern #salaInfo[style*="block"] { display:grid !important; grid-template-columns:minmax(0,1.4fr) minmax(0,1fr); gap:16px; align-content:start; }
+.index-modern #salaInfo .section-container { min-width:0; margin:0; padding:16px; border:1px solid #dce9f7; background:linear-gradient(135deg,#fff,#f4f9ff); border-radius:10px; box-shadow:0 3px 10px #143d6810; }
+.index-modern #salaInfo .section-container:first-child { grid-column:1 / -1; }
+.index-modern #salaInfo h3 { margin:0 0 16px; padding-bottom:12px; border-bottom:1px solid #bcd7f5; font-size:16px; color:#063c83; }
+.index-modern #salaDetalhes { display:flex; gap:24px; align-items:flex-start; }
+.index-modern .index-room-photo { flex:0 1 35%; min-width:0; }
+.index-modern #salaDetalhes img { display:block; margin:0; width:100%; max-height:300px; object-fit:contain; border-radius:9px; background:#e3edf7; }
+.index-modern .index-room-fields { flex:1; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px 20px; margin:0; min-width:0; }
+.index-modern .index-room-fields div { min-width:0; padding-left:12px; border-left:3px solid #d9eaff; }
+.index-modern .index-room-fields dt { font-size:12px; font-weight:700; color:#14385d; }
+.index-modern .index-room-fields dd { margin:4px 0 0; font-size:14px; line-height:1.5; color:#305683; overflow-wrap:anywhere; }
+.index-modern .agendamentosList { max-height:340px; overflow:auto; display:grid; gap:12px; scrollbar-width:thin; scrollbar-color:#9dbbdb transparent; }
+.index-modern .agendamentosList > div { padding:12px 14px; background:#edf5ff; border:1px solid #dce8f7; border-left:3px solid #007dff; border-radius:6px; font-size:13px; line-height:1.8; overflow-wrap:anywhere; }
+.index-modern .agendamentosList hr { display:none; }
+.index-modern #programasList { max-height:280px; overflow:auto; scrollbar-width:thin; scrollbar-color:#9dbbdb transparent; padding:0; margin:14px 0 0; }
+.index-modern #programasList li { margin:0; padding:8px 4px; border-bottom:1px solid #e0ebf7; color:#305683; font-size:13px; overflow-wrap:anywhere; transition:none; }
+.index-modern #programasList li:hover { transform:none; background:#edf5ff; }
+.index-modern .informacao-sala { grid-column:1 / -1; margin:8px 0 0; padding:16px; border-top:1px solid #dae7f6; }
+.index-modern .imagem-informativa { object-fit:contain; margin:0 10px; max-width:18%; }
+.index-modern footer { background:#092744ed; font-size:12px; padding:12px 65px; margin-top:auto; }
+.index-modern footer p { margin:0; }
+.index-modern .clickable-image.expanded { width:auto; height:auto; max-width:92vw; max-height:90vh; object-fit:contain; border-radius:8px; }
+.index-modern:has(#salaInfo[style*="block"]) .info-geral { margin-top:24px; margin-bottom:12px; }
+.index-modern:has(#salaInfo[style*="block"]) .nav-title { font-size:32px; }
+@media(min-width:1100px) { .index-modern .main-container:has(.sidebar.active) #salaInfo { margin-left:300px; } }
+@media(max-width:1000px) { .index-modern .menuToggle { gap:4px; } .index-modern header a { padding:9px; font-size:12px; } .index-modern #salaDetalhes { flex-direction:column; } .index-modern .index-room-photo { width:100%; } .index-modern .index-room-fields { width:100%; } }
+@media(max-width:700px) { .index-modern header { margin:0; border-radius:0 0 12px 12px; padding:10px; } .index-modern .menuToggle { display:grid; grid-template-columns:1fr 1fr; gap:6px; } .index-modern .menuToggle .menu-trigger { grid-column:1 / -1; justify-self:start; } .index-modern header a { line-height:1.4; } .index-modern .sidebar { top:185px; bottom:12px; } .index-modern .info-geral { margin-top:36px; } .index-modern .main-container { padding:0 12px 20px; } .index-modern #salaInfo[style*="block"] { grid-template-columns:1fr; padding:12px; } .index-modern .index-room-fields { grid-template-columns:repeat(2,minmax(0,1fr)); } .index-modern .section-container { padding:12px; } }
+@media(max-width:380px) { .index-modern .sidebar { top:210px; } .index-modern .index-room-fields { grid-template-columns:1fr; } }
+@media(prefers-reduced-motion:reduce) { .index-modern .sidebar { transition:none; } }
+
+/* Initial entrance: same destinations as the header, no change to room states. */
+.index-modern .index-entry,.index-modern .index-entry-prompt,.index-modern .index-entry-clock { display:none; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"]))::before { background:linear-gradient(180deg,rgba(0,39,92,.12),rgba(0,46,107,.16)); }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .info-geral { width:100%; max-width:1100px; margin:clamp(48px,10vh,85px) auto 22px; padding:0 20px; text-align:center; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-kicker { font-size:12px; font-weight:400; letter-spacing:.3em; margin-bottom:12px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .nav-title { font-size:clamp(32px,3.4vw,48px); line-height:1.2; margin:0; letter-spacing:.015em; font-weight:800; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .nav-title::after { width:50px; height:5px; margin:16px auto; background:#159cff; border-radius:3px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-guidance { display:none; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-prompt { display:block; min-height:0; margin:0; font-size:20px; font-weight:500; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry { display:block; width:min(1000px,calc(100% - 64px)); margin:10px auto 0; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-cards { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card { --accent:#0083ff; --tint:#dcebff; display:flex; flex-direction:column; align-items:center; text-align:center; padding:20px 18px 16px; min-height:224px; background:linear-gradient(120deg,#fff,#f3f8ff); border-radius:10px; border:1px solid #e1edff; color:#082453; text-decoration:none; box-shadow:0 5px 15px #00245612; transition:transform .18s,box-shadow .18s; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card:nth-child(2) { --accent:#00b5ab; --tint:#d9f5f2; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card:nth-child(3) { --accent:#8039e9; --tint:#ede1ff; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card:nth-child(4) { --accent:#ff8300; --tint:#ffead7; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .entry-icon { width:68px; height:68px; display:grid; place-items:center; border-radius:50%; color:var(--accent); background:var(--tint); font-size:32px; margin-bottom:14px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card h2 { font-size:16px; line-height:1.3; margin:0 0 8px; font-weight:750; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card p { color:#456a9c; font-size:14px; line-height:1.45; margin:0 0 16px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .entry-arrow { margin-top:auto; display:grid; place-items:center; width:33px; height:33px; border-radius:50%; color:white; background:var(--accent); font-size:23px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card:hover { transform:translateY(-3px); box-shadow:0 10px 24px #001c4530; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-signature { display:flex; justify-content:center; align-items:center; gap:26px; width:70%; margin:20px auto 0; padding:20px 0; border-top:1px solid #b1d7ff35; font-size:14px; color:#d8e8fc; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-signature i { font-size:26px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-signature span { border-left:1px solid #a6cfff; padding-left:26px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .main-container { flex:1; padding:0; min-height:0; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) header nav { display:flex; align-items:center; gap:16px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .menuToggle { flex:1; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-clock { display:flex; gap:12px; align-items:center; border-left:1px solid #ffffff40; padding-left:20px; text-align:left; white-space:nowrap; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-clock i { font-size:22px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-clock time { display:block; font-size:10px; }
+.index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) #index-entry-time { font-size:15px; font-weight:700; }
+@media(max-width:1100px) { .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-clock { display:none; } }
+@media(max-width:850px) { .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-cards { grid-template-columns:repeat(2,minmax(0,1fr)); } .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .info-geral { margin-top:40px; } }
+@media(max-width:480px) { .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry { width:calc(100% - 32px); } .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-cards { grid-template-columns:1fr; } .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-signature { width:100%; gap:16px; font-size:12px; } .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-signature span { padding-left:16px; } }
+@media(prefers-reduced-motion:reduce) { .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card { transition:none; } .index-modern:not(:has(#sidebar.active)):has(#unidadeSelect option[value=""]:checked):not(:has(#salaInfo[style*="block"])) .index-entry-card:hover { transform:none; } }

@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Minhas Alocações</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="/css/alocacao-docente.css">
+</head>
+
+<body>
+    <header class="module-header">
+        <div>
+            <h1>Minhas Alocações</h1>
+            <p>Sua grade pedagógica, sem vínculo automático com salas.</p>
+        </div>
+        <nav class="module-nav"><a href="/alocacao-docente">Início do módulo</a><a href="/alocacao-docente/nova">Nova
+                Alocação</a></nav>
+    </header>
+    <main class="module-main">
+        <section class="panel">
+            <div id="feedback" class="feedback"></div>
+            <div id="lista" class="allocation-list">
+                <p class="empty">Carregando...</p>
+            </div>
+        </section>
+    </main>
+    <script src="/js/alocacao-docente-common.js"></script>
+    <script src="/js/alocacao-docente-minhas.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatórios de Equipamentos</title>
+    <link rel="stylesheet" href="../css/gerenciarequipamentos.css">
+    <link rel="stylesheet" href="../css/relatorios-equipamentos.css">
+    <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+<div class="dash-shell">
+    <aside class="dash-sidebar no-print">
+        <div class="sidebar-brand">
+            <i class="fas fa-file-export"></i>
+            <span>Relatórios</span>
+        </div>
+        <nav class="sidebar-nav">
+            <a href="/gerenciar-equipamentos" class="nav-item">
+                <i class="fas fa-desktop"></i>
+                <span>Equipamentos</span>
+            </a>
+            <a href="/relatorios-equipamentos" class="nav-item active">
+                <i class="fas fa-file-export"></i>
+                <span>Relatórios</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="/dashboard" class="nav-item nav-item--muted">
+                <i class="fas fa-arrow-left"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+    </aside>
+
+    <main class="dash-main">
+        <header class="dash-topbar no-print">
+            <div class="topbar-title">
+                <p class="eyebrow">Inventário</p>
+                <h1>Relatórios de Equipamentos</h1>
+            </div>
+        </header>
+
+        <section class="tab-panel active relatorios-page">
+            <div class="content-card content-card--compact no-print">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Filtros</p>
+                        <h2>Gerar relatório por unidade, tipo de sala e sala</h2>
+                    </div>
+                </div>
+
+                <div class="selectors-grid selectors-grid--reports">
+                    <div class="form-group">
+                        <label for="selectUnidade">Unidade:</label>
+                        <select id="selectUnidade">
+                            <option value="">Selecione a unidade</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectTipoSala">Tipo de Sala:</label>
+                        <select id="selectTipoSala">
+                            <option value="">Selecione o tipo</option>
+                            <option value="academica">Acadêmica</option>
+                            <option value="administrativa">Administrativa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectSala">Sala:</label>
+                        <select id="selectSala" disabled>
+                            <option value="">Todas as salas</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="selectFormato">Formato:</label>
+                        <select id="selectFormato">
+                            <option value="pdf">PDF/Impressão</option>
+                            <option value="excel">Excel</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-actions-inline report-actions">
+                    <button type="button" id="btnGerarPdf" class="btn btn-primary">
+                        <i class="fas fa-print"></i> Gerar PDF / Imprimir
+                    </button>
+                    <button type="button" id="btnExportarExcel" class="btn btn-secondary">
+                        <i class="fas fa-file-excel"></i> Exportar Excel
+                    </button>
+                    <span id="relatorioStatus" class="feedback-msg"></span>
+                </div>
+            </div>
+
+            <div id="previewRelatorio" class="report-preview">
+                <div class="empty-state no-print">Selecione os filtros e gere o relatório para visualizar o conteúdo.</div>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script src="/js/relatorios-equipamentos.js"></script>
+<script src="/js/logout-button.js"></script>
+</body>
+</html>

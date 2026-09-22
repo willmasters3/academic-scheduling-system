@@ -1,0 +1,166 @@
+.relatorios-page {
+    padding-top: 20px;
+}
+
+.selectors-grid--reports {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+@media (min-width: 801px) and (max-width: 1200px) {
+    .selectors-grid--reports {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+.report-actions {
+    margin-top: 18px;
+    align-items: center;
+}
+
+.report-preview {
+    padding: 0 28px 28px;
+}
+
+.sala-relatorio {
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card);
+    margin-bottom: 18px;
+    overflow: hidden;
+}
+
+.report-header {
+    padding: 20px 22px 14px;
+    border-bottom: 1px solid var(--border);
+}
+
+.report-header h2 {
+    margin: 0 0 12px;
+    color: var(--navy);
+    font-size: 1.05rem;
+}
+
+.report-meta {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(220px, 1fr));
+    gap: 6px 18px;
+}
+
+.report-meta p {
+    margin: 0;
+    color: var(--text-main);
+}
+
+.report-summary {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 18px;
+    padding: 14px 22px;
+    color: var(--text-main);
+    background: #f7fbff;
+    border-bottom: 1px solid var(--border);
+}
+
+.report-table {
+    width: 100%;
+    min-width: 900px;
+    border-collapse: collapse;
+}
+
+.report-table th,
+.report-table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid rgba(223,232,240,.9);
+    vertical-align: top;
+}
+
+.report-table th {
+    background: #f4f8fc;
+    color: #375373;
+    font-size: .75rem;
+    letter-spacing: .07em;
+    text-transform: uppercase;
+}
+
+@media (max-width: 800px) {
+    .selectors-grid--reports,
+    .report-meta {
+        grid-template-columns: 1fr;
+    }
+
+    .report-actions {
+        align-items: stretch;
+    }
+}
+
+@page {
+    size: A4 landscape;
+    margin: 10mm;
+}
+
+@media print {
+    body {
+        background: #fff !important;
+    }
+
+    body * {
+        visibility: visible !important;
+    }
+
+    body::before,
+    body::after,
+    .no-print,
+    #global-logout-btn,
+    .global-logout-btn {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    .dash-shell,
+    .dash-main,
+    .relatorios-page,
+    .report-preview {
+        display: block !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        min-height: auto !important;
+    }
+
+    .sala-relatorio {
+        page-break-after: always;
+        border: none !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+        margin: 0 !important;
+    }
+
+    .sala-relatorio:last-child {
+        page-break-after: auto;
+    }
+
+    .report-header,
+    .report-summary {
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+        background: #fff !important;
+    }
+
+    .report-table {
+        min-width: 0;
+        font-size: 8pt;
+    }
+
+    .report-table th,
+    .report-table td {
+        padding: 5px 6px;
+        color: #000;
+    }
+
+    .report-table th {
+        background: #f3f3f3 !important;
+        color: #000 !important;
+        font-size: 7pt;
+    }
+}

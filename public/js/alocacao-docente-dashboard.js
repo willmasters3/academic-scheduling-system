@@ -1,0 +1,1 @@
+document.addEventListener('DOMContentLoaded',async()=>{try{const ctx=await AlocacaoDocente.api('/alocacoes-docentes/contexto');document.getElementById('voltarDashboard').href=ctx.usuario.permissao==='admin'?'/dashboard':'/dashboard-coordenador'}catch(error){console.error(error)}});

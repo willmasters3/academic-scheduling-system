@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Professor</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="../css/cadastro.css">
+</head>
+<body>
+    <main class="page-shell">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Gestao de usuarios</p>
+                <h1>Cadastro de Funcionarios e Professores</h1>
+                <p class="header-subtitle">Mesmo padrao visual do modulo de equipamentos, com fluxo rapido para cadastro e gerenciamento por unidade.</p>
+            </div>
+            <nav class="quick-links">
+                <a href="../"><i class="fas fa-home"></i> Inicio</a>
+                <a href="/dashboard"><i class="fas fa-th-large"></i> Dashboard</a>
+                <a href="/altera-dados"><i class="fas fa-door-open"></i> Altera dados Salas</a>
+                <a href="/altera-agenda"><i class="fas fa-calendar-check"></i> Agenda</a>
+                <a href="/gerenciar-equipamentos"><i class="fas fa-desktop"></i> Gerenciar Equipamentos</a>
+            </nav>
+        </header>
+
+        <section class="layout-grid">
+            <article class="card form-card">
+                <div class="card-header">
+                    <h2>Novo cadastro</h2>
+                    <p>Preencha os dados e associe uma ou mais unidades.</p>
+                </div>
+
+                <form id="professorForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="matricula">Matricula</label>
+                            <input type="text" id="matricula" name="matricula" required>
+                            <small id="matriculaStatus" class="field-status">Digite a matricula para verificar se ja existe.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="nome">Nome completo</label>
+                            <input type="text" id="nome" name="nome" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="login">Login (nome.sobrenome)</label>
+                            <input type="text" id="login" name="login" placeholder="nome.sobrenome" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="senha">Senha</label>
+                            <input type="password" id="senha" name="senha" placeholder="Senha" required>
+                            <label class="checkbox-inline" for="senhaTemporaria">
+                                <input type="checkbox" id="senhaTemporaria" name="senhaTemporaria" value="1">
+                                Senha temporaria
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" name="email" placeholder="nome@dominio.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="turno_principal">Turno de trabalho</label>
+                            <select id="turno_principal" name="turno_principal">
+                                <option value="">Nao informado</option>
+                                <option value="manha">Manha</option>
+                                <option value="tarde">Tarde</option>
+                                <option value="noite">Noite</option>
+                                <option value="manha, tarde">Manha e tarde</option>
+                                <option value="tarde, noite">Tarde e noite</option>
+                                <option value="manha, noite">Manha e noite</option>
+                                <option value="manha, tarde, noite">Manha, tarde e noite</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="carga_horaria_semanal">Horas de trabalho por semana</label>
+                            <input type="number" id="carga_horaria_semanal" name="carga_horaria_semanal" min="0" max="80" step="0.5" placeholder="Ex.: 40">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="foto">Foto (opcional)</label>
+                            <input type="file" id="foto" name="foto" accept="image/*">
+                            <small class="field-help">Aceita JPG, PNG e WebP.</small>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="permissao">Permissao</label>
+                            <select id="permissao" name="permissao" required>
+                                <option value="user">Professor/Funcionario(a)</option>
+                                <option value="coordenador">Coordenador</option>
+                                <option value="admin" id="admOption" style="display:none;">Administrador</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="classificacaoDocente">Vínculo docente</label>
+                            <select id="classificacaoDocente" name="classificacao_docente">
+                                <option value="">Não informado</option>
+                                <option value="1">Docente</option>
+                                <option value="0">Não docente</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="qualificacao">Qualificacao profissional (opcional)</label>
+                            <input type="text" id="qualificacao" name="qualificacao" placeholder="Ex.: INSTRUTOR DE EDUCAÇÃO PROFISSIONAL BÁSICA I">
+                            <small class="field-help">Deixe em branco se nao aplicavel. Ex.: INSTRUTOR DE EDUCAÇÃO PROFISSIONAL TECNICA I (MECÂNICA)</small>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="codigo_unidade">Unidades</label>
+                            <select id="codigo_unidade" class="codigo_unidade" name="unidades" multiple required>
+                            </select>
+                            <small>Pressione Ctrl para selecionar mais de uma unidade.</small>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit"><i class="fas fa-user-plus"></i> Adicionar</button>
+                    </div>
+                </form>
+            </article>
+
+            <aside class="card info-card">
+                <div class="card-header">
+                    <h2>Atencao</h2>
+                </div>
+                <ul>
+                    <li>Desassociar remove o professor apenas da unidade.</li>
+                    <li>Excluir remove permanentemente do banco de dados.</li>
+                    <li>Priorize sempre desassociar antes de excluir.</li>
+                    <li>Nao e possivel excluir professor com sala agendada.</li>
+                </ul>
+            </aside>
+        </section>
+
+        <section id="professoresContainer" class="card table-card">
+            <div class="card-header">
+                <h2>Professores por unidade</h2>
+                <p>Selecione uma unidade para listar e gerenciar.</p>
+            </div>
+            <div class="table-wrap">
+                <table id="professoresTabela">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Login</th>
+                            <th>Matricula</th>
+                            <th>Acoes</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <div id="editarProfessorModal" class="edit-modal hidden" aria-hidden="true">
+            <div class="edit-modal__backdrop" data-close-edit-modal="true"></div>
+            <div class="edit-modal__panel" role="dialog" aria-modal="true" aria-labelledby="editarProfessorTitulo">
+                <div class="card-header">
+                    <h2 id="editarProfessorTitulo">Editar usuario</h2>
+                    <p>Atualize os dados completos do funcionario sem precisar acessar o banco.</p>
+                </div>
+
+                <form id="editarProfessorForm" enctype="multipart/form-data">
+                    <input type="hidden" id="editarProfessorId" name="id_professor">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="editarMatricula">Matricula</label>
+                            <input type="text" id="editarMatricula" name="matricula" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarNome">Nome completo</label>
+                            <input type="text" id="editarNome" name="nome" required>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="editarLogin">Login</label>
+                            <input type="text" id="editarLogin" name="login" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarEmail">Email</label>
+                            <input type="email" id="editarEmail" name="email" placeholder="nome@dominio.com">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarPermissao">Perfil</label>
+                            <select id="editarPermissao" name="permissao" required>
+                                <option value="user">Professor/Funcionario(a)</option>
+                                <option value="coordenador">Coordenador</option>
+                                <option value="admin" id="editarAdminOption" style="display:none;">Administrador</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarTurnoPrincipal">Turno de trabalho</label>
+                            <select id="editarTurnoPrincipal" name="turno_principal">
+                                <option value="">Nao informado</option>
+                                <option value="manha">Manha</option>
+                                <option value="tarde">Tarde</option>
+                                <option value="noite">Noite</option>
+                                <option value="manha, tarde">Manha e tarde</option>
+                                <option value="tarde, noite">Tarde e noite</option>
+                                <option value="manha, noite">Manha e noite</option>
+                                <option value="manha, tarde, noite">Manha, tarde e noite</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarCargaHoraria">Horas de trabalho por semana</label>
+                            <input type="number" id="editarCargaHoraria" name="carga_horaria_semanal" min="0" max="80" step="0.5" placeholder="Ex.: 40">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarFoto">Foto (opcional)</label>
+                            <input type="file" id="editarFoto" name="foto" accept="image/*">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarNovaSenha">Nova senha (opcional)</label>
+                            <input type="password" id="editarNovaSenha" name="novaSenha" autocomplete="new-password" placeholder="Deixe em branco para manter">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="editarConfirmarSenha">Confirmar nova senha</label>
+                            <input type="password" id="editarConfirmarSenha" name="confirmarNovaSenha" autocomplete="new-password" placeholder="Repita a nova senha">
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label class="checkbox-inline" for="editarSenhaTemporaria">
+                                <input type="checkbox" id="editarSenhaTemporaria" name="senhaTemporaria" value="1">
+                                Marcar senha como temporaria (usuario devera redefinir no proximo login)
+                            </label>
+                        </div>
+
+                        <div class="form-group form-group-full">
+                            <label for="editarClassificacaoDocente">Vínculo docente</label>
+                            <select id="editarClassificacaoDocente" name="classificacao_docente">
+                                <option value="">Não informado</option>
+                                <option value="1">Docente</option>
+                                <option value="0">Não docente</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="editarQualificacao">Qualificacao profissional (opcional)</label>
+                            <input type="text" id="editarQualificacao" name="qualificacao" placeholder="Ex.: INSTRUTOR DE EDUCAÇÃO PROFISSIONAL BÁSICA I">
+                            <small class="field-help">Ex.: INSTRUTOR DE EDUCAÇÃO PROFISSIONAL TECNICA I (MECÂNICA)</small>
+                        </div>
+                    </div>
+
+                    <div class="edit-modal__actions">
+                        <button type="button" class="edit-modal__secondary" id="cancelarEdicaoProfessor">Cancelar</button>
+                        <button type="submit" id="salvarEdicaoProfessor">Salvar alteracoes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal Alterar Senha -->
+        <div id="alterarSenhaModal" class="edit-modal hidden" aria-hidden="true">
+            <div class="edit-modal__backdrop" id="alterarSenhaBackdrop"></div>
+            <div class="edit-modal__panel" role="dialog" aria-modal="true" aria-labelledby="alterarSenhaTitulo">
+                <div class="card-header">
+                    <h2 id="alterarSenhaTitulo"><i class="fas fa-key"></i> Redefinir Senha</h2>
+                    <p>Defina uma nova senha para o usuario abaixo.</p>
+                </div>
+
+                <div class="senha-modal__info">
+                    <div class="senha-modal__info-row">
+                        <span class="senha-modal__label">Professor</span>
+                        <span class="senha-modal__value" id="alterarSenhaNome">—</span>
+                    </div>
+                    <div class="senha-modal__info-row">
+                        <span class="senha-modal__label">Matricula</span>
+                        <span class="senha-modal__value" id="alterarSenhaMatricula">—</span>
+                    </div>
+                </div>
+
+                <form id="alterarSenhaForm" novalidate>
+                    <input type="hidden" id="alterarSenhaId">
+
+                    <div class="form-grid" style="margin-top:14px;">
+                        <div class="form-group">
+                            <label for="novaSenhaInput">Nova Senha</label>
+                            <input type="password" id="novaSenhaInput" name="novaSenha" autocomplete="new-password" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmarSenhaInput">Confirmar Senha</label>
+                            <input type="password" id="confirmarSenhaInput" name="confirmarSenha" autocomplete="new-password" required>
+                        </div>
+                    </div>
+
+                    <div class="senha-modal__requisitos">
+                        <p class="senha-modal__req-titulo">A senha deve conter:</p>
+                        <ul>
+                            <li id="req-len"><i class="fas fa-circle req-icon"></i> Minimo 8 caracteres</li>
+                            <li id="req-upper"><i class="fas fa-circle req-icon"></i> Pelo menos 1 letra maiuscula</li>
+                            <li id="req-num"><i class="fas fa-circle req-icon"></i> Pelo menos 1 numero</li>
+                            <li id="req-special"><i class="fas fa-circle req-icon"></i> Pelo menos 1 caractere especial (!@#$%^&amp;*)</li>
+                        </ul>
+                    </div>
+
+                    <div id="alterarSenhaErro" class="senha-modal__erro hidden"></div>
+
+                    <div class="edit-modal__actions">
+                        <button type="button" class="edit-modal__secondary" id="cancelarAlterarSenha">Cancelar</button>
+                        <button type="submit" id="salvarNovaSenha"><i class="fas fa-save"></i> Salvar Senha</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <footer>
+            <p>Desenvolvido pela equipe Lean Demo Unidade Centro</p>
+        </footer>
+    </main>
+
+    <script src="/js/cadastro_professor.js"></script>
+<script src="/js/logout-button.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alterar Dados da Sala</title>
+  <link rel="shortcut icon" type="imagex/png" href="/imagens/favicon-demo.svg" />
+  <link rel="stylesheet" href="../css/alteradados.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+  <div class="dash-shell">
+    <aside class="dash-sidebar">
+      <div class="sidebar-brand">
+        <i class="fas fa-door-open"></i>
+        <span>Salas</span>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="../" class="nav-item"><i class="fas fa-home"></i><span>Pagina Inicial</span></a>
+        <a href="/altera-agenda" class="nav-item"><i class="fas fa-calendar-alt"></i><span>Gerenciar Agendamento</span></a>
+        <a href="/agenda-sala" class="nav-item"><i class="fas fa-calendar-plus"></i><span>Criar Agendamentos</span></a>
+        <a href="/adiciona-unidade" class="nav-item"><i class="fas fa-building"></i><span>Gerenciar Unidades</span></a>
+        <a href="/gerenciar-equipamentos" class="nav-item"><i class="fas fa-server"></i><span>Gerenciar Equipamentos</span></a>
+      </nav>
+      <div class="sidebar-footer">
+        <a href="/dashboard" class="nav-item nav-item--muted"><i class="fas fa-arrow-left"></i><span>Dashboard</span></a>
+      </div>
+    </aside>
+
+    <main class="dash-main">
+      <header class="dash-topbar">
+        <div class="topbar-title">
+          <p class="eyebrow">Gestao de Salas</p>
+          <h1>Alterar Dados da Sala</h1>
+        </div>
+        <div class="topbar-actions"></div>
+      </header>
+
+      <section class="kpi-grid">
+        <div class="kpi-card kpi-card--blue">
+          <div class="kpi-icon"><i class="fas fa-door-open"></i></div>
+          <div class="kpi-info">
+            <span id="kpiSalaSelecionada" class="kpi-value">-</span>
+            <span class="kpi-label">Sala Selecionada</span>
+          </div>
+        </div>
+        <div class="kpi-card kpi-card--green">
+          <div class="kpi-icon"><i class="fas fa-chair"></i></div>
+          <div class="kpi-info">
+            <span id="kpiCadeiras" class="kpi-value">0</span>
+            <span class="kpi-label">Cadeiras</span>
+          </div>
+        </div>
+        <div class="kpi-card kpi-card--purple">
+          <div class="kpi-icon"><i class="fas fa-desktop"></i></div>
+          <div class="kpi-info">
+            <span id="kpiComputadores" class="kpi-value">0</span>
+            <span class="kpi-label">Computadores</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="tab-panel active">
+        <div class="content-card">
+          <div class="content-card__header">
+            <div>
+              <p class="eyebrow">Fluxo recomendado</p>
+              <h2>Dados Estruturais da Sala</h2>
+            </div>
+          </div>
+
+          <div class="section-info section-info--guide">
+            <i class="fas fa-map-signs"></i>
+            <div>
+              <strong>O que esta tela faz:</strong>
+              <p>Use esta pagina para atualizar os dados estruturais da sala selecionada, como capacidade, equipamentos disponiveis, recursos didaticos e imagem da sala.</p>
+            </div>
+          </div>
+
+          <div class="steps-overview" aria-label="Passos para editar a sala">
+            <div class="step-chip step-chip--active">
+              <span class="step-chip__number">1</span>
+              <div>
+                <strong>Recarregue as salas</strong>
+                <span>Atualize a lista quando precisar.</span>
+              </div>
+            </div>
+            <div class="step-chip">
+              <span class="step-chip__number">2</span>
+              <div>
+                <strong>Busque e selecione</strong>
+                <span>Encontre a sala pela busca ou pela lista.</span>
+              </div>
+            </div>
+            <div class="step-chip">
+              <span class="step-chip__number">3</span>
+              <div>
+                <strong>Revise os dados</strong>
+                <span>Atualize capacidade, equipamentos e recursos.</span>
+              </div>
+            </div>
+            <div class="step-chip step-chip--finish">
+              <span class="step-chip__number">4</span>
+              <div>
+                <strong>Salve as alteracoes</strong>
+                <span>Confirme a atualizacao da sala.</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="reload-callout">
+            <div class="reload-callout__content">
+              <p class="reload-callout__eyebrow">Passo 1</p>
+              <h3>Atualize a lista antes de escolher a sala</h3>
+              <p>Se houve cadastro, ajuste ou mudanca recente, recarregue as salas para trabalhar com a lista mais atual.</p>
+            </div>
+            <button type="button" id="btnRecarregarSalas" class="btn btn-primary btn-load-rooms"><i class="fas fa-sync-alt"></i> Recarregar Salas</button>
+          </div>
+
+          <form id="form-alterar-sala" enctype="multipart/form-data">
+            <div class="step-section">
+              <div class="step-section__header">
+                <span class="step-section__badge">Passo 2</span>
+                <div>
+                  <strong>Encontre a sala que voce quer editar</strong>
+                  <p>Primeiro pesquise se precisar. Depois selecione a sala correta para carregar automaticamente os dados atuais.</p>
+                </div>
+              </div>
+            <div class="form-grid form-grid--single">
+              <div class="form-group">
+                <label for="filtroSalas">Buscar sala ou unidade:</label>
+                <input type="text" id="filtroSalas" placeholder="Digite nome da sala, codigo ou unidade">
+              </div>
+              <div class="form-group">
+                <label for="salas">Selecione uma sala:</label>
+                <select id="salas" required>
+                  <option value="" disabled selected>Selecione uma sala</option>
+                </select>
+              </div>
+            </div>
+            </div>
+
+            <p class="form-section-title"><i class="fas fa-chair"></i> Capacidade</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="cadeiras">Número de Cadeiras:</label>
+                <input type="number" id="cadeiras" min="0" placeholder="Ex: 30" required>
+              </div>
+
+              <div class="form-group">
+                <label for="computadores">Número de Computadores:</label>
+                <input type="number" id="computadores" min="0" placeholder="Ex: 15" required>
+              </div>
+
+              <div class="form-group">
+                <label for="area">Área (m²):</label>
+                <input type="text" id="area" placeholder="Ex: 45" required>
+              </div>
+            </div>
+
+            <p class="form-section-title"><i class="fas fa-tv"></i> Equipamentos</p>
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="quadroBranco">Quadro Branco:</label>
+                <select id="quadroBranco" required>
+                  <option value="">Selecione</option>
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="projetor">Projetor:</label>
+                <select id="projetor" required>
+                  <option value="">Selecione</option>
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="telaProjetor">Tela de Projetor:</label>
+                <select id="telaProjetor" required>
+                  <option value="">Selecione</option>
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+                </select>
+              </div>
+
+              <div class="form-group">
+                <label for="tv">TV:</label>
+                <select id="tv" required>
+                  <option value="">Selecione</option>
+                  <option value="Sim">Sim</option>
+                  <option value="Não">Não</option>
+                </select>
+              </div>
+            </div>
+
+            <p class="form-section-title"><i class="fas fa-tools"></i> Outros Recursos</p>
+            <div class="form-grid">
+              <div class="form-group form-group--full">
+                <label for="maquinario">Recursos didáticos / Maquinário:</label>
+                <input type="text" id="maquinario" placeholder="Descreva os recursos disponíveis na sala" required>
+              </div>
+
+              <div class="form-group form-group--full">
+                <label for="salaImage">Imagem da Sala:</label>
+                <input type="file" id="salaImage" accept="image/*" />
+              </div>
+            </div>
+
+            <div class="section-info section-info--steps">
+              <i class="fas fa-info-circle"></i>
+              <div>
+                <strong>Resumo rapido:</strong>
+                <p>1. Recarregue as salas. 2. Busque e selecione a sala. 3. Revise ou atualize os dados estruturais. 4. Clique em Salvar Alteracoes.</p>
+              </div>
+            </div>
+
+            <div class="action-panel">
+              <div class="action-panel__summary">
+                <span class="step-section__badge step-section__badge--finish">Passo 4</span>
+                <div>
+                  <strong>Concluir atualizacao da sala</strong>
+                  <p>Depois de revisar os campos, salve as alteracoes ou limpe o formulario para recomecar.</p>
+                </div>
+              </div>
+              <div class="form-actions-inline form-actions-inline--final">
+                <button type="submit" class="btn btn-primary btn-save-room"><i class="fas fa-save"></i> Salvar Alteracoes</button>
+                <button type="button" id="btnLimparFormulario" class="btn btn-ghost"><i class="fas fa-eraser"></i> Limpar</button>
+              </div>
+            </div>
+
+            <div id="formFeedback" class="feedback-msg"></div>
+          </form>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="../js/alteradados.js"></script>
+  <script src="/js/logout-button.js"></script>
+</body>
+</html>
+
+

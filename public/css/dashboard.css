@@ -1,0 +1,239 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Manrope:wght@500;700&display=swap');
+
+:root {
+    --bg: #ecf3fb;
+    --ink: #14283f;
+    --muted: #5f6f84;
+    --brand: #1769d8;
+    --brand-dark: #0d4a9f;
+    --card: #ffffff;
+    --line: rgba(22, 65, 116, 0.16);
+    --radius-xl: 28px;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --demo-bg: url('/imagens/bg-demo.svg');
+    /* Ajuste rapido do fundo Demo: fraco(0.20), medio(0.28), forte(0.38+) */
+    --demo-photo-opacity: 0.28;
+    --demo-overlay-top: 0.72;
+    --demo-overlay-mid: 0.78;
+    --demo-overlay-bottom: 0.84;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    position: relative;
+    min-height: 100vh;
+    font-family: 'Manrope', 'Segoe UI', sans-serif;
+    color: var(--ink);
+    background:
+        radial-gradient(circle at 10% -10%, rgba(23, 105, 216, 0.2), transparent 32%),
+        radial-gradient(circle at 100% 0%, rgba(18, 200, 160, 0.18), transparent 28%),
+        linear-gradient(180deg, #f8fbff 0%, var(--bg) 58%, #e7eef7 100%);
+}
+
+body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -2;
+    background-image: var(--demo-bg);
+    background-size: cover;
+    background-position: center top;
+    opacity: var(--demo-photo-opacity);
+    filter: saturate(1.05) contrast(1.02);
+}
+
+body::after {
+    content: '';
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    background: linear-gradient(
+        180deg,
+        rgba(248, 251, 255, var(--demo-overlay-top)) 0%,
+        rgba(236, 243, 251, var(--demo-overlay-mid)) 58%,
+        rgba(231, 238, 247, var(--demo-overlay-bottom)) 100%
+    );
+}
+
+.dashboard-shell {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 34px 20px 42px;
+}
+
+.hero-panel {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+    align-items: stretch;
+    padding: 26px;
+    border-radius: var(--radius-xl);
+    background: linear-gradient(135deg, rgba(11, 45, 88, 0.95), rgba(22, 105, 204, 0.9));
+    color: #f7fbff;
+    box-shadow: 0 24px 54px rgba(10, 37, 72, 0.26);
+}
+
+.hero-kicker {
+    margin: 0;
+    font-size: 0.75rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: rgba(236, 247, 255, 0.8);
+    font-weight: 700;
+}
+
+#welcome-message {
+    margin: 10px 0 6px;
+    font-family: 'Sora', 'Segoe UI', sans-serif;
+    font-size: clamp(1.5rem, 3vw, 2.25rem);
+    font-weight: 700;
+}
+
+.hero-subtext {
+    margin: 0;
+    color: rgba(232, 245, 255, 0.88);
+    max-width: 620px;
+}
+
+.hero-side {
+    display: flex;
+    align-items: center;
+}
+
+.clock-card {
+    min-width: 220px;
+    padding: 14px 18px;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(8px);
+}
+
+.clock-label {
+    margin: 0;
+    font-size: 0.78rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(236, 247, 255, 0.85);
+    font-weight: 700;
+}
+
+.clock-value {
+    margin: 6px 0 0;
+    font-family: 'Sora', 'Segoe UI', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+}
+
+.modules-panel {
+    margin-top: 24px;
+    padding: 24px;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-xl);
+    background: rgba(255, 255, 255, 0.82);
+    backdrop-filter: blur(8px);
+    box-shadow: 0 20px 42px rgba(17, 47, 86, 0.1);
+}
+
+.section-title-wrap h2 {
+    margin: 0;
+    font-family: 'Sora', 'Segoe UI', sans-serif;
+    font-size: 1.35rem;
+}
+
+.section-title-wrap p {
+    margin: 6px 0 0;
+    color: var(--muted);
+}
+
+.card-container {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 14px;
+}
+
+.card {
+    text-align: left;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--card);
+    padding: 18px 16px;
+    min-height: 150px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+
+.card i {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(23, 105, 216, 0.12);
+    color: var(--brand);
+    font-size: 1rem;
+}
+
+.card h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-family: 'Sora', 'Segoe UI', sans-serif;
+    line-height: 1.3;
+}
+
+.card span {
+    color: var(--muted);
+    font-size: 0.88rem;
+}
+
+.card:hover {
+    transform: translateY(-4px);
+    border-color: rgba(23, 105, 216, 0.34);
+    box-shadow: 0 16px 30px rgba(17, 47, 86, 0.16);
+}
+
+@media (max-width: 1060px) {
+    .card-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 860px) {
+    .hero-panel {
+        grid-template-columns: 1fr;
+    }
+
+    .card-container {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 560px) {
+    .dashboard-shell {
+        padding: 18px 14px 28px;
+    }
+
+    .hero-panel,
+    .modules-panel {
+        padding: 16px;
+    }
+
+    .clock-card {
+        min-width: 0;
+        width: 100%;
+    }
+
+    .card-container {
+        grid-template-columns: 1fr;
+    }
+}

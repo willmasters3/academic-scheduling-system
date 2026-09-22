@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Alocação Docente</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="/css/alocacao-docente.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+
+<body>
+    <header class="module-header">
+        <div>
+            <h1>Alocação Docente</h1>
+            <p>Organização da grade pedagógica dos docentes.</p>
+        </div>
+        <nav class="module-nav"><a id="voltarDashboard" href="/dashboard-professor">Voltar ao painel</a></nav>
+    </header>
+    <main class="module-main">
+        <div class="module-grid"><a class="module-card" href="/alocacao-docente/nova"><i class="fas fa-plus-circle"></i>
+                <h2>Nova Alocação</h2>
+                <p>Cadastre um novo vínculo pedagógico para um docente, sem criar reserva de sala.</p>
+            </a><a class="module-card" href="/alocacao-docente/coletiva"><i class="fas fa-users"></i>
+                <h2>Alocação Coletiva</h2>
+                <p>Cadastre a mesma atividade institucional para vários docentes da unidade.</p>
+            </a><a id="cardCoordenacao" class="module-card" href="/alocacao-docente/coordenacao"><i
+                    class="fas fa-users-cog"></i>
+                <h2>Painel da Coordenação</h2>
+                <p>Acompanhe docentes, turmas, UCs, cargas e períodos por unidade.</p>
+            </a></div>
+    </main>
+    <script src="/js/alocacao-docente-common.js"></script>
+    <script src="/js/alocacao-docente-dashboard.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+
+</html>

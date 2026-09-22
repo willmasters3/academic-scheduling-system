@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Professor</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="../css/dashboardagenda.css">
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <span>Agenda do Professor</span>
+            <i class="fas fa-angle-left" onclick="toggleMenu()"></i>
+        </div>
+        <ul class="menu">
+            <li id="menuInicio" onclick="window.location.href='/'">
+                <i class="fas fa-home"></i><span>Início</span>
+            </li>
+            <li id="mostrarFormularioBtn">
+                <i class="fas fa-calendar-plus"></i><span>Agendar Sala</span>
+            </li>
+            <li id="mostrarTrocaSalaBtn"><i class="fas fa-exchange-alt"></i><span>Troca de Sala</span></li>
+            <li id="mostrarAgendaCompletaBtn">
+                <i class="fas fa-calendar-alt"></i><span>Agenda Completa</span>
+            </li>
+
+            <li id="mostrarSalasBtn"><i class="fas fa-door-open"></i><span>Mapa de Salas</span></li>
+            <li id="mostrarRelatoriosBtn"><i class="fas fa-chart-line"></i><span>Relatórios</span></li>
+            <li id="mostrarConfiguracoesBtn"><i class="fas fa-cog"></i><span>Configurações</span></li>
+        </ul>
+        
+        <div class="sidebar-footer">
+            <div class="sidebar-avatar" aria-label="Foto do professor no menu">
+                <img id="sidebarFotoProfessor" alt="Foto do professor" style="display: none;">
+                <i class="fas fa-user-circle" aria-hidden="true"></i>
+            </div>
+            <span id="sidebarPerfilUsuario">Usuário</span>
+
+            <div id="session-timer-container">
+                <small>Sessão expira em:</small> 
+                <span id="session-timer">Carregando...</span>
+            </div>
+        </div>
+
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <h1 id="saudacaoDashboard">Dashboard</h1>
+            <div class="text-right p-3 header-actions">
+                <button class="btn btn-secondary" onclick="voltarParaLayoutAntigo()">Voltar para o layout
+                    antigo</button>
+            </div>
+            <div class="user-icon" aria-label="Foto do professor">
+                <img id="headerFotoProfessor" alt="Foto do professor" style="display: none;">
+                <i class="fas fa-user-circle" aria-hidden="true"></i>
+            </div>
+
+        </div>
+        <div class="cards">
+            <div class="card">
+                <h3>Horas Agendadas (mês) <i class="fas fa-clock"></i></h3>
+                <p id="horasAgendadasMes">Carregando...</p>
+            </div>
+            <div class="card">
+                <h3>Agendamentos (mês) <i class="fas fa-calendar-check"></i></h3>
+                <p id="agendamentosMes">Carregando...</p>
+            </div>
+            <div class="card">
+                <h3>Salas Utilizadas <i class="fas fa-door-open"></i></h3>
+                <p id="salasUtilizadasMes">Carregando...</p>
+            </div>
+            <div class="card">
+                <h3>Taxa de Ocupação <i class="fas fa-chart-pie"></i></h3>
+                <p id="taxaOcupacaoMes">Carregando...</p>
+            </div>
+        </div>
+        <div class="bottom-section">
+            <div class="weekly-agenda">
+                <h2>Minha Agenda</h2>
+                <div id="agendamentoFormSlot"></div>
+                <div id="agendaSemanaCalendario"></div>
+            </div>
+            <div class="most-used-rooms">
+                <h2>Salas mais utilizadas <br> (Últimos 2 meses)</h2>
+                <div id="salasMaisUsadas">
+                    <!-- Preenchido via JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <br><br>
+        <main class="main-container">
+            <div id="agendamentoFormOrigem"></div>
+            <form id="agendamentoForm" class="agendamentoForm">
+                <label for="codigo_unidade">Unidade: </label>
+                <select class="codigo_unidade" id="codigo_unidade" name="codigo_unidade"></select><br><br>
+                <label for="id_professor">Colaborador(a):</label>
+                <select class="id_professor" id="id_professor" name="id_professor">
+                    <!-- Opções serão inseridas dinamicamente via JavaScript -->
+                </select><br><br>
+                <label for="id_sala">Sala:</label>
+                <select class="id_sala" id="id_sala" name="id_sala"></select><br><br>
+
+                <div class="checkdiasemana">
+                    <label for="dias_da_semana">Dias da Semana:</label><br>
+                    <div class="checkbox-container">
+                        <label><input type="checkbox" value="0"> Domingo</label>
+                        <label><input type="checkbox" value="1"> Segunda</label>
+                        <label><input type="checkbox" value="2"> Terça</label>
+                        <label><input type="checkbox" value="3"> Quarta</label>
+                        <label><input type="checkbox" value="4"> Quinta</label>
+                        <label><input type="checkbox" value="5"> Sexta</label>
+                        <label><input type="checkbox" value="6"> Sábado</label>
+                    </div>
+                </div>
+                <br>
+                <div class="hora_inicio">
+                    <div class="linha">
+                        <div class="campo" >
+                            <label for="select_turno">Preenchimento Rápido (Turno):</label>
+                            <select id="select_turno" class="form-control">
+                                <option value="" selected>-- Selecione para preencher automático --</option>
+                                <option value="manha">Manhã (07:45 - 11:45)</option>
+                                <option value="tarde">Tarde (13:15 - 17:15)</option>
+                                <option value="noite">Noite (19:00 - 22:40)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="linha">
+                         <div class="campo">
+                            <label for="data_inicio">Data de Início:</label>
+                            <input type="date" id="data_inicio" name="data_inicio" required>
+                             </div>
+                        <div class="campo">
+                             <label for="data_fim">Data de Fim:</label>
+                            <input type="date" id="data_fim" name="data_fim" required>
+                             </div>
+                         </div>
+
+                     <div class="linha">
+                         <div class="campo">
+                         <label for="hora_inicio">Hora de Início:</label>
+                             <input type="time" id="hora_inicio" name="hora_inicio" required>
+                             </div>
+                         <div class="campo">
+                            <label for="hora_fim">Hora de Fim:</label>
+                            <input type="time" id="hora_fim" name="hora_fim" required>
+                             </div>
+                        </div>                    
+                </div>
+
+                <div class="dataSelecionada">
+                    <label for="data_selecionada">Datas Selecionadas:</label>
+                    <input class="data_selecionada" type="text" id="data_selecionada" name="data_selecionada"
+                        placeholder="Selecione as datas" readonly
+                        style="background-color: #fff; color: #000; cursor: pointer;"><br><br>
+                    <button type="button" id="editarDatasSelecionadas">Editar Datas Selecionadas</button><br><br>
+                    <button type="button" id="finalizarEdicaoDatas">Finalizar Edição</button>
+                    <p id="contadorDias" class="contadorDias" style="font-weight: bold;"></p>
+                </div>
+
+                <label for="id_tipo_aula">Selecione a Unidade Curricular:</label>
+                <select class="id_tipo_aula" id="id_tipo_aula" name="id_tipo_aula"></select><br><br>
+                <label for="motivo">Motivo/Turma:</label>
+                <textarea id="motivo" name="motivo"></textarea><br><br>
+                <div class="botoes-verificacao">
+                    <button type="button" id="verificarAgendamentos">Verificar Conflitos</button><br><br>
+                    <!-- Dentro do formulário -->
+                    <button type="button" id="verificarSalas">Verificar Salas Disponíveis</button><br><br>
+                    <button type="button" id="verMeusAgendamentos">Ver meus Agendamentos</button><br><br>
+                </div><br>
+                <div class="agendarsubmit">
+                    <button type="submit">Agendar Sala</button>
+                </div>
+                <br><br>
+                <div id="resultadoVerificacao" class="resultadoVerificacao"></div><br>
+                <div id="resultadoSalasDisponiveis" class="resultadoSalasDisponiveis"></div>
+                <div id="filtros" class="mb-4">
+                    <h3>FILTRAR OS MEUS AGENDAMENTOS</h3>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="filtroSala">Sala:</label>
+                            <input type="text" id="filtroSala" class="form-control mb-2"
+                                placeholder="Digite o nome da sala..." />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="filtroDataInicio">Data de Início:</label>
+                            <input type="date" id="filtroDataInicio" class="form-control mb-2" />
+                        </div>
+                        <div class="col-md-4">
+                            <label for="filtroDataFim">Data de Fim:</label>
+                            <input type="date" id="filtroDataFim" class="form-control mb-2" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <label for="filtroTurno">Turno:</label>
+                            <select id="filtroTurno" class="form-control mb-2">
+                                <option value="">Todos os Turnos</option>
+                                <option value="manha">Manhã (6:00 - 12:59)</option>
+                                <option value="tarde">Tarde (13:00 - 17:15)</option>
+                                <option value="noite">Noite (17:15 - 23:59)</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <label for="filtroDiaSemana">Dia da Semana:</label>
+                            <select id="filtroDiaSemana" class="form-control mb-2">
+                                <option value="">Todos os Dias</option>
+                                <option value="0">Domingo</option>
+                                <option value="1">Segunda-feira</option>
+                                <option value="2">Terça-feira</option>
+                                <option value="3">Quarta-feira</option>
+                                <option value="4">Quinta-feira</option>
+                                <option value="5">Sexta-feira</option>
+                                <option value="6">Sábado</option>
+                            </select>
+                        </div>
+                        <div class="col-md-4">
+                            <button type="button" id="aplicarFiltros" class="btn btn-primary mt-4">Aplicar Filtros</button>
+                        </div>
+                    </div>
+                    <div>
+                        <div id="paginacao" class="paginacao">
+                            <button type="button" id="botaoAnterior" style="display: none;">Anterior</button>
+                            <button type="button" id="botaoProximo" style="display: none;">Próximo</button>
+                        </div><br>
+                        <!-- Botão de Excluir Selecionados -->
+                        <button type="button" id="botaoExcluirSelecionados" class="btn-exclusao" style="display: none;">Excluir
+                            Selecionados</button>
+                        <div id="agendamentosExistentes" class="agendamentosExistentes"></div>
+                    </div>
+                </div>
+            </form>
+            <div id="secaoAgendaCompletaOrigem"></div>
+            <section id="secaoAgendaCompletaContainer" class="agenda-completa-container">
+                <div class="agenda-completa-card">
+                    <div class="agenda-completa-card__header">
+                        <div>
+                            <h2>Agenda Completa</h2>
+                            <p>Consulte agendamentos por unidade, professor, sala, período, turno e dia da semana sem sair do dashboard.</p>
+                        </div>
+                        <span class="agenda-completa-badge">Consulta</span>
+                    </div>
+
+                    <div class="agenda-completa-filtros">
+                        <div class="agenda-completa-campo agenda-completa-campo--unidade">
+                            <label for="agendaCompletaUnidade">Unidade</label>
+                            <select id="agendaCompletaUnidade" class="form-control">
+                                <option value="">Selecione uma unidade</option>
+                            </select>
+                        </div>
+                        <div class="agenda-completa-campo">
+                            <label for="agendaCompletaSala">Sala</label>
+                            <input type="text" id="agendaCompletaSala" class="form-control" placeholder="Filtrar pelo nome da sala">
+                        </div>
+                        <div class="agenda-completa-campo">
+                            <label for="agendaCompletaProfessor">Professor</label>
+                            <input type="text" id="agendaCompletaProfessor" class="form-control" placeholder="Filtrar pelo nome do professor">
+                        </div>
+                        <div class="agenda-completa-campo">
+                            <label for="agendaCompletaDataInicio">Data de início</label>
+                            <input type="date" id="agendaCompletaDataInicio" class="form-control">
+                        </div>
+                        <div class="agenda-completa-campo">
+                            <label for="agendaCompletaDataFim">Data de fim</label>
+                            <input type="date" id="agendaCompletaDataFim" class="form-control">
+                        </div>
+                        <div class="agenda-completa-campo">
+                            <label for="agendaCompletaTurno">Turno</label>
+                            <select id="agendaCompletaTurno" class="form-control">
+                                <option value="">Todos os turnos</option>
+                                <option value="manha">Manhã (6:00 - 12:59)</option>
+                                <option value="tarde">Tarde (13:00 - 17:15)</option>
+                                <option value="noite">Noite (17:16 - 23:59)</option>
+                            </select>
+                        </div>
+                        <div class="agenda-completa-campo">
+                            <label for="agendaCompletaDiaSemana">Dia da semana</label>
+                            <select id="agendaCompletaDiaSemana" class="form-control">
+                                <option value="">Todos os dias</option>
+                                <option value="0">Domingo</option>
+                                <option value="1">Segunda-feira</option>
+                                <option value="2">Terça-feira</option>
+                                <option value="3">Quarta-feira</option>
+                                <option value="4">Quinta-feira</option>
+                                <option value="5">Sexta-feira</option>
+                                <option value="6">Sábado</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="agenda-completa-acoes">
+                        <button id="agendaCompletaAplicar" type="button" class="btn btn-primary">Aplicar filtros</button>
+                        <button id="agendaCompletaLimpar" type="button" class="btn btn-outline-primary">Limpar</button>
+                    </div>
+                    <div id="agendaCompletaFeedback" class="agenda-completa-feedback" aria-live="polite"></div>
+                </div>
+
+                <div class="agenda-completa-resultados">
+                    <div class="agenda-completa-resultados__header">
+                        <h3>Resultados</h3>
+                        <span id="agendaCompletaResumo">Selecione uma unidade para consultar os agendamentos.</span>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table agenda-completa-tabela">
+                            <thead>
+                                <tr>
+                                    <th>Sala</th>
+                                    <th>Professor</th>
+                                    <th>Data</th>
+                                    <th>Início</th>
+                                    <th>Fim</th>
+                                    <th>UC</th>
+                                    <th>Motivo/Turma</th>
+                                </tr>
+                            </thead>
+                            <tbody id="agendaCompletaTabelaBody">
+                                <tr>
+                                    <td colspan="7" class="text-center">Selecione uma unidade e aplique os filtros para ver os agendamentos.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="agenda-completa-paginacao">
+                        <button id="agendaCompletaAnterior" type="button" class="btn btn-outline-primary" disabled>Anterior</button>
+                        <span id="agendaCompletaPaginacaoInfo">Página 1 de 1</span>
+                        <button id="agendaCompletaProximo" type="button" class="btn btn-outline-primary" disabled>Próximo</button>
+                    </div>
+                </div>
+            </section>
+            <div id="secaoTrocaSalaOrigem"></div>
+            <div id="secaoTrocaSalaContainer" class="secao-troca-container">
+                <div id="secaoTrocaSala" class="secao-troca-sala">
+                    <h3>Troca de Sala (Simples)</h3>
+                    <p class="subtitulo-troca">Selecione um agendamento seu e escolha um professor no mesmo dia e horário para solicitar a troca.</p>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="trocaMeuAgendamento">Meu agendamento:</label>
+                            <select id="trocaMeuAgendamento" class="form-control mb-2"></select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="trocaAgendamentoDestino">Agendamento do outro professor:</label>
+                            <select id="trocaAgendamentoDestino" class="form-control mb-2"></select>
+                        </div>
+                    </div>
+
+                    <label for="trocaMensagem">Mensagem (opcional):</label>
+                    <textarea id="trocaMensagem" class="form-control mb-2" rows="2" placeholder="Ex.: Podemos trocar a sala nesta aula?"></textarea>
+                    <button id="trocaEnviarSolicitacao" class="btn btn-primary">Enviar solicitação</button>
+                    <div id="trocaFeedback" class="troca-feedback mt-2"></div>
+
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            <h4>Solicitações recebidas</h4>
+                            <div id="trocaRecebidas" class="troca-lista"></div>
+                            <div id="trocaRecebidasPaginacao"></div>
+                        </div>
+                        <div class="col-md-6">
+                            <h4>Minhas solicitações</h4>
+                            <div id="trocaEnviadas" class="troca-lista"></div>
+                            <div id="trocaEnviadasPaginacao"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="secaoTrocaSalaMultipla" class="secao-troca-sala secao-troca-sala-multipla">
+                    <h3>Troca de Sala (Múltipla)</h3>
+                    <p class="subtitulo-troca">Selecione quantos agendamentos seus quiser (somente hoje e futuros), simule os pares e escolha item a item quais solicitações enviar.</p>
+
+                    <label for="trocaMultiplaMeusAgendamentos">Meus agendamentos (múltipla seleção):</label>
+                    <select id="trocaMultiplaMeusAgendamentos" class="form-control mb-2" multiple size="6"></select>
+                    <button id="trocaMultiplaCarregarOpcoes" class="btn btn-outline-primary">Simular opções por item</button>
+
+                    <p id="trocaMultiplaResumo" class="troca-feedback mt-2">Nenhuma simulação realizada.</p>
+
+                    <div class="table-responsive mt-3">
+                        <table class="table table-sm table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>Usar</th>
+                                    <th>Origem</th>
+                                    <th>Destino</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trocaMultiplaResultadoBody">
+                                <tr>
+                                    <td colspan="4">Escolha seus agendamentos e clique em Simular opções por item.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <label for="trocaMultiplaMensagem">Mensagem das solicitações (opcional):</label>
+                    <textarea id="trocaMultiplaMensagem" class="form-control mb-2" rows="2" placeholder="Ex.: Podemos trocar essas aulas da semana?"></textarea>
+                    <button id="trocaMultiplaEnviar" class="btn btn-primary">Enviar solicitações selecionadas</button>
+                    <div id="trocaMultiplaFeedback" class="troca-feedback mt-2"></div>
+                </div>
+            </div>
+            <br>
+            <div id="secaoRelatoriosOrigem"></div>
+            <div id="secaoRelatorios" class="secao-relatorios">
+                <h1>Meus Relatórios</h1>
+
+                <div class="relatorio-container">
+                    <h2>Horas por Unidade Curricular</h2>
+                    <div id="relatorioHorasUc">Carregando...</div>
+                </div>
+
+                <div class="relatorio-container">
+                    <h2>Uso de Salas (Detalhado)</h2>
+                    <div id="relatorioUsoSalas">Carregando...</div>
+                </div>
+
+                <div id="graficoContainer" class="relatorio-container relatorio-container--grafico">
+                    <div class="relatorio-grafico__header">
+                        <h2>Uso de Salas (Visão Geral)</h2>
+                        <p>Distribuição proporcional dos agendamentos no período atual.</p>
+                    </div>
+                    <div class="relatorio-grafico__canvas-wrap">
+                        <canvas id="meuGraficoDonut"></canvas>
+                    </div>
+                    <p id="relatorioUsoSalasResumo" class="relatorio-grafico__resumo">Carregando visão geral...</p>
+                </div>
+
+                <div class="relatorio-container">
+                    <h2>Agendamentos por Período</h2>
+                    <div id="relatorioPorPeriodo">Carregando...</div>
+                </div>
+            </div>
+                <div id="secaoConfiguracoesOrigem"></div>
+                <div id="secaoConfiguracoes" class="secao-configuracoes" style="display: none;">
+                    <h1>Configurações do Meu Perfil</h1>
+
+                    <div class="configuracoes-layout">
+                        <section class="config-perfil-card">
+                            <div class="config-avatar" aria-hidden="true">
+                                <img id="configFotoPreview" alt="Foto do professor" style="display: none;">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <div class="config-perfil-meta">
+                                <p class="config-perfil-meta__eyebrow" id="configPerfilEyebrow">Perfil do usuário</p>
+                                <h2 id="configNomeExibicao">Carregando...</h2>
+                                <p id="configLoginExibicao">Login: --</p>
+                                <p id="configEmailExibicao">E-mail: --</p>
+                                <p id="configQualificacaoExibicao">Qualificação: --</p>
+                                <p id="configTurnoExibicao">Turnos: --</p>
+                                <p id="configCargaHorariaExibicao">Carga horária semanal: --</p>
+                                <p id="configPermissaoExibicao">Permissão: --</p>
+                                <p id="configUnidadesExibicao">Unidades: --</p>
+                            </div>
+                            <div class="config-perfil-alerta">
+                                <i class="fas fa-shield-alt"></i>
+                                <span>A permissão é definida pela coordenação/TI e não pode ser alterada aqui.</span>
+                            </div>
+                        </section>
+
+                        <section class="config-card">
+                            <div class="config-card__header">
+                                <div>
+                                    <p class="config-card__eyebrow">Dados pessoais</p>
+                                    <h2>Editar perfil</h2>
+                                </div>
+                            </div>
+
+                            <form id="perfilProfessorForm" class="config-form" novalidate>
+                                <div class="config-grid">
+                                    <div class="form-group">
+                                        <label for="configNome">Nome completo</label>
+                                        <input type="text" id="configNome" autocomplete="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="configLogin">Login</label>
+                                        <input type="text" id="configLogin" autocomplete="username" readonly>
+                                        <small class="config-help">O login é fixo e não pode ser alterado aqui.</small>
+                                    </div>
+                                </div>
+
+                                <div class="config-grid config-grid--single">
+                                    <div class="form-group form-group--foto">
+                                        <label for="configFoto">Foto do perfil</label>
+                                        <input type="file" id="configFoto" accept="image/*">
+                                        <small class="config-help">JPG, PNG ou WebP. A foto aparece no seu perfil e no cabeçalho.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="configEmail">E-mail</label>
+                                        <input type="email" id="configEmail" autocomplete="email" placeholder="seuemail@exemplo.com">
+                                    </div>
+                                </div>
+
+                                <div class="config-grid config-grid--single">
+                                    <div class="form-group">
+                                        <label for="configQualificacao">Qualificação profissional</label>
+                                        <input type="text" id="configQualificacao" maxlength="200" placeholder="Ex.: INSTRUTOR DE EDUCAÇÃO PROFISSIONAL TECNICA I">
+                                    </div>
+                                </div>
+
+                                <div class="config-grid">
+                                    <div class="form-group">
+                                        <label>Turnos que trabalha</label>
+                                        <div class="config-checkboxes" id="configTurnosTrabalho">
+                                            <label class="config-checkbox">
+                                                <input type="checkbox" value="manha">
+                                                <span>Manhã</span>
+                                            </label>
+                                            <label class="config-checkbox">
+                                                <input type="checkbox" value="tarde">
+                                                <span>Tarde</span>
+                                            </label>
+                                            <label class="config-checkbox">
+                                                <input type="checkbox" value="noite">
+                                                <span>Noite</span>
+                                            </label>
+                                        </div>
+                                        <small class="config-help" id="configTurnosHelp">Marque quantos turnos o usuário trabalha.</small>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="configCargaHorariaSemanal">Carga horária semanal</label>
+                                        <input type="number" id="configCargaHorariaSemanal" min="0" max="80" step="0.5" placeholder="Ex.: 20">
+                                    </div>
+                                </div>
+
+                                <div class="config-actions">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Perfil</button>
+                                </div>
+
+                                <div id="perfilProfessorFeedback" class="config-feedback"></div>
+                            </form>
+                        </section>
+
+                        <section class="config-card">
+                            <div class="config-card__header">
+                                <div>
+                                    <p class="config-card__eyebrow">Segurança</p>
+                                    <h2>Alterar senha</h2>
+                                </div>
+                            </div>
+
+                            <form id="senhaProfessorForm" class="config-form" novalidate>
+                                <div class="config-grid config-grid--single">
+                                    <div class="form-group">
+                                        <label for="senhaAtualProfessor">Senha atual</label>
+                                        <input type="password" id="senhaAtualProfessor" autocomplete="current-password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="novaSenhaProfessor">Nova senha</label>
+                                        <input type="password" id="novaSenhaProfessor" autocomplete="new-password" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirmarNovaSenhaProfessor">Confirmar nova senha</label>
+                                        <input type="password" id="confirmarNovaSenhaProfessor" autocomplete="new-password" required>
+                                    </div>
+                                </div>
+
+                                <div class="config-senha-ajuda">
+                                    <p>A senha precisa ter ao menos 8 caracteres, 1 letra maiúscula, 1 número e 1 caractere especial.</p>
+                                </div>
+
+                                <div class="config-actions">
+                                    <button type="submit" class="btn btn-primary"><i class="fas fa-key"></i> Alterar Senha</button>
+                                </div>
+
+                                <div id="senhaProfessorFeedback" class="config-feedback"></div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            <div id="secaoSalasOrigem"></div>
+            <div id="secaoSalas" class="secao-salas" style="display: none;"> 
+    <h2>Visualizador de Salas e Equipamentos</h2>
+    
+    <div class="sala-selectors">
+        <div class="row mb-4">
+            <div class="col-md-6">
+                <label for="seletorDeUnidade">Unidade:</label>
+                <select id="seletorDeUnidade" class="form-control"></select>
+            </div>
+            <div class="col-md-6">
+                <label for="seletorDeSala">Sala:</label>
+                <select id="seletorDeSala" class="form-control" disabled>
+                    <option value="">Aguardando seleção da unidade...</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <div id="containerDetalheSala" class="container-detalhe-sala" style="display: none;">
+        <h3 id="nomeSalaDetalhe">Detalhes da Sala</h3>
+        
+        <div class="row sala-layout-area">
+            <div class="col-md-9">
+                <div id="desenhoSala" class="area-desenho">
+                    </div>
+            </div>
+            <div class="col-md-3">
+                <div id="infoSala" class="area-info">
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        </main>
+        <!--
+    <footer>
+        <p>Desenvolvido pela equipe Lean Demo Unidade Centro</p>
+        <div id="informacaoSala" class="informacao-sala">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+        </div>
+    </footer>
+-->
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/index.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.15/locales-all.global.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="../js/luxon.min.js"></script>
+    <script src="../js/agendamentoUtils.js"></script>
+    <script src="../js/agendasala.js"></script>
+    <script src="/js/chatbot-global.js"></script>
+    <script src="../js/dashboardagenda.js"></script>
+    <script src="/js/sessionTimer.js"></script>
+
+<script src="/js/logout-button.js"></script>
+</body>
+
+</html>

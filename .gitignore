@@ -1,0 +1,58 @@
+# Environment and secrets
+.env
+.env.*
+!.env.example
+
+# Dependencies
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Runtime and temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.old
+*.orig
+
+# Database dumps and local database files
+*.bak
+*.bacpac
+*.dacpac
+*.dump
+*.sqlbak
+*.mdf
+*.ldf
+*.ndf
+*.db
+*.sqlite
+*.sqlite3
+
+# User uploads and real media
+imagens/uploads/
+imagens/professor-*
+imagens/image-*
+imagens/imagens-*
+uploads/
+
+# OS and editor files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Build output
+dist/
+build/
+out/
+coverage/

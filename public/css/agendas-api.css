@@ -1,0 +1,244 @@
+/* CSS para o formulário e outros estilos */
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300..900&display=swap');
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-image: url("/imagens/bg-demo.svg");
+  background-color: #8f8e8e;
+  display: flex;
+  flex-direction: column;
+  color: #333;
+}
+
+header {
+    background-color: rgba(51, 51, 51, 0.8);
+    padding: 20px;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+}
+
+header h1 {
+  color: #f9f9f9;
+  text-align: center;
+  margin-bottom: 20px;
+  font-family: 'Arial', sans-serif;
+  text-transform: uppercase;
+}
+
+/* Estilos para o link "Adicionar Programas" */
+header a {
+  text-decoration: none; 
+  color: #f1eded; 
+  font-weight: bold;
+  margin-right: 20px;
+  display: flex; 
+  align-items: flex-start;
+  padding: 5px;
+}
+.hiperlink-programas {
+    display: flex;
+    justify-content: flex-end; /* Alinha à direita */
+    margin-bottom: 10px; /* Espaçamento inferior */
+}
+.mr-3{
+    color: white;
+}
+.material-icons{
+    color: white;
+    cursor: pointer;
+}
+
+.filtros-card {
+  background: rgba(13, 56, 122, 0.68);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 12px 28px rgba(4, 20, 47, 0.25);
+}
+
+.filtros-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.filtros-header h3 {
+  color: #ffffff;
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+.filtros-badge {
+  background: #1b8bf7;
+  color: #fff;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.filtros-help {
+  color: #e7f2ff;
+  margin-bottom: 14px;
+}
+
+
+
+  .filtro-container {
+    margin: 20px 0; /* Ajuste adicional aqui */
+  }
+  
+  .alert {
+    background-color: #007bff; /* Cor de fundo para destaque */
+  }
+  
+  table {
+      margin-top: 20px;
+      border-radius: 0.5rem;
+      overflow: hidden; /* Para arredondar as bordas da tabela */
+  }
+
+  .agendamento-tabela {
+    width: 100%;
+    border-collapse: collapse; /* Remove o espaçamento entre as células */
+    margin-top: 20px;
+}
+th{
+  vertical-align: middle;
+}
+.agendamento-tabela th {
+  
+    background-color: #077ef5; /* Cor de fundo para o cabeçalho */
+    color: white; /* Cor do texto no cabeçalho */
+}
+  .agendamento-tabela th,
+  .agendamento-tabela td {
+      padding: 12px; /* Espaciamento em todos os lados */
+      text-align: left; /* Alinhamento à esquerda para a tabela */
+      background-color: white;
+      border: 1px;
+      border-color: #000000;
+  }
+  
+  .agendamento-tabela th {
+      background-color: #343a40; /* Limitar estilo ao cabeçalho */
+      color: white; /* Texto bonito para os cabeçalhos */
+  }
+
+
+.paginacao {
+      margin: 20px 0; /* Espaçamento na página */
+      text-align: center; /* Centraliza os botões de paginação */
+      
+  }
+  
+.paginacao button {
+  background-color: #4749ee;
+  color: white;
+  margin: 5px 0;
+  margin-left: 5px;
+  padding: 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+  }
+  .paginacao button:hover{
+    background-color: #45a049;
+  }
+
+  .paginacao-reticencias {
+    display: inline-block;
+    min-width: 34px;
+    margin-left: 5px;
+    color: #ffffff;
+    font-weight: 700;
+    text-align: center;
+    vertical-align: middle;
+  }
+  .filtro-container h3 {
+      margin-bottom: 0; /* Alinha o título do filtro */
+      color: white; /* Cor do texto do filtro */
+  }
+  
+  .unidadeSelect,
+  .filtros {
+      display: flex;
+      flex-wrap: wrap; /* Flex-wrap para dar flexibilidade */
+  }
+  
+  .unidadeSelect label,
+  .filtros label {
+      margin-bottom: 5px;
+      color: white; /* Cor do texto */
+  }
+  
+  .filtros {
+      gap: 10px; /* Espaço entre os elementos */
+      display: block;
+  }
+
+    .filtros .form-group {
+      margin-bottom: 10px;
+    }
+
+    .filtros-acoes {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 4px;
+    }
+  
+  .filtros .form-control,
+  .unidadeSelect .form-control {
+      margin-bottom: 10px; /* Espaço entre os campos */
+  }
+
+    .filtros .form-control {
+      border-radius: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.45);
+    }
+
+    .filtros .btn {
+      min-width: 150px;
+      font-weight: 700;
+    }
+
+  @media (max-width: 768px) {
+    .filtros-header {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+
+    .filtros-acoes .btn {
+      width: 100%;
+    }
+  }
+  
+.informacao-sala {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.imagem-informativa {
+    max-width: 20%;
+    height: auto; /* Altura automática para manter a proporção */
+}
+  
+/* Rodapé */
+footer {
+    background-color: rgba(51, 51, 51, 0.8);
+    color: #fff;
+    padding: 10px;
+    text-align: center;
+    position: relative;
+  }

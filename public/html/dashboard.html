@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel Central | Demo</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg">
+    <link rel="stylesheet" href="/css/dashboard-portal.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body class="portal-dashboard">
+    <a class="skip-link" href="#modules">Ir para os módulos</a>
+    <aside class="portal-sidebar" aria-label="Painel central">
+        <a class="portal-brand" href="/dashboard"><strong>Demo</strong><span>Sistema de Agendamentos</span></a>
+        <nav aria-label="Navegação do portal"><a href="/dashboard" aria-current="page"><i class="fas fa-home" aria-hidden="true"></i> Início</a><a href="#modules"><i class="fas fa-th-large" aria-hidden="true"></i> Módulos do Sistema</a></nav>
+        <div class="sidebar-footer"><strong>Demo/RS</strong><span>Tecnologia a serviço<br>da educação profissional</span></div>
+    </aside>
+    <main class="dashboard-shell">
+        <header class="portal-topbar">
+            <label class="portal-search"><i class="fas fa-search" aria-hidden="true"></i><input id="module-search" type="search" placeholder="Buscar módulo..." aria-label="Buscar módulo"></label>
+            <div class="portal-account"><span id="user-avatar" class="user-avatar" aria-hidden="true">--</span><div><strong id="user-name">Usuário</strong><span id="user-role"></span></div></div>
+            <div data-logout-container></div>
+        </header>
+        <section class="hero-panel" aria-labelledby="welcome-message">
+            <div class="hero-content">
+                <p class="hero-kicker">Painel Central</p>
+                <h1 id="welcome-message">Bem-vindo!</h1>
+                <p class="hero-subtext">Acesse os módulos do sistema e gerencie suas atividades.</p>
+                <div class="hero-details">
+                    <div id="unit-detail" hidden><i class="fas fa-map-marker-alt" aria-hidden="true"></i><span><small>Unidade(s)</small><strong id="user-units"></strong></span></div>
+                    <div><i class="far fa-calendar-alt" aria-hidden="true"></i><span><small>Hoje</small><time id="current-date">--</time></span></div>
+                    <div><i class="far fa-clock" aria-hidden="true"></i><span><time id="current-datetime">--:--</time><small>Horário de Brasília</small></span></div>
+                </div>
+            </div>
+        </section>
+        <section id="modules" class="modules-panel" aria-labelledby="modules-title">
+            <div class="section-title-wrap"><i class="fas fa-th-large" aria-hidden="true"></i><div><h2 id="modules-title">Módulos do Sistema</h2><p>Selecione um módulo para continuar.</p></div></div>
+            <div class="card-container">
+                <a class="card" href="/dashboard-professor">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Agendar Salas (Novo)</h3>
+                    <span>Fluxo atualizado de agendamentos</span>
+                </a>
+
+                <a class="card" href="agendasala.html">
+                    <i class="fas fa-history"></i>
+                    <h3>Agendar Salas (Antigo)</h3>
+                    <span>Versão legada do processo</span>
+                </a>
+
+                <a class="card" href="alteraagenda.html">
+                    <i class="fas fa-tasks"></i>
+                    <h3>Gerenciar Agenda</h3>
+                    <span>Edição e acompanhamento</span>
+                </a>
+
+                <a class="card" href="/auditoria-agendamentos">
+                    <i class="fas fa-clipboard-check"></i>
+                    <h3>Auditoria de Agendamentos</h3>
+                    <span>Histórico de criações, edições e exclusões</span>
+                </a>
+
+                <a class="card" href="cadastro.html">
+                    <i class="fas fa-user-plus"></i>
+                    <h3>Cadastro de Usuários</h3>
+                    <span>Controle de acessos</span>
+                </a>
+
+                <a class="card" href="alteradados.html">
+                    <i class="fas fa-door-open"></i>
+                    <h3>Gerenciar Salas</h3>
+                    <span>Dados e configurações</span>
+                </a>
+
+                <a class="card" href="unidadescurriculares.html">
+                    <i class="fas fa-book-open"></i>
+                    <h3>Unidades Curriculares</h3>
+                    <span>Organização acadêmica</span>
+                </a>
+
+                <a class="card" href="adicionaunidade.html">
+                    <i class="fas fa-building"></i>
+                    <h3>Criar Unidades e Salas</h3>
+                    <span>Estrutura física do sistema</span>
+                </a>
+
+                <a class="card" href="adicionaprogramas.html">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>Gerenciar Programas</h3>
+                    <span>Programas e vínculos</span>
+                </a>
+
+                <a class="card" href="/alocacao-docente">
+                    <i class="fas fa-user-clock"></i>
+                    <h3>Alocação Docente</h3>
+                    <span>Grade pedagógica dos docentes</span>
+                </a>
+
+                <a class="card" href="/gestao-docente">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Gestão Docente</h3>
+                    <span>Cargas, cobertura e planejamentos acadêmicos</span>
+                </a>
+
+                <a class="card" href="/info-computadores">
+                    <i class="fas fa-desktop"></i>
+                    <h3>Info Computadores</h3>
+                    <span>Inventário de computadores</span>
+                </a>
+
+                <a class="card" href="gerenciarequipamentos.html">
+                    <i class="fas fa-desktop"></i>
+                    <h3>Gerenciar Equipamentos</h3>
+                    <span>Inventário e vinculações</span>
+                </a>
+
+                <a class="card" href="/relatorios-equipamentos">
+                    <i class="fas fa-file-export"></i>
+                    <h3>Relatórios</h3>
+                    <span>Equipamentos por unidade e sala</span>
+                </a>
+            </div>
+            <p id="search-empty" hidden role="status">Nenhum módulo encontrado. Tente outro termo.</p>
+        </section>
+        <footer class="portal-footer"><p>Formação profissional hoje.<br><strong>Indústria mais forte amanhã.</strong></p><span>Demo/RS<small>Sistema de Agendamentos</small></span></footer>
+    </main>
+    <script src="/js/dashboard.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+</html>

@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Disponibilidade de Professores - Coordenador</title>
+    <link rel="stylesheet" href="/css/disponibilidade-professores.css"> 
+    
+</head>
+<body>
+    <header>
+        <h1>Disponibilidade de Professores</h1>
+        <p>Consulta inteligente de janelas livres por unidade, professor e perfil de jornada.</p>
+    </header>
+
+    <main class="container">
+        <div class="card">
+            <h2 class="card-title">Filtro de Consulta</h2>
+            <form id="form-disponibilidade" class="form-group">
+                
+                <label for="select-unidade">Selecione a Unidade:</label>
+                <select id="select-unidade" required>
+                    <option value="">Carregando Unidades...</option>
+                </select>
+
+                <label for="select-professor">Selecione o Professor:</label>
+                <select id="select-professor" name="id_professor" required disabled>
+                    <option value="">Selecione uma Unidade Primeiro</option>
+                </select>
+
+                <div class="row row-tight">
+                    <div class="col-6">
+                        <label for="filtro-turno">Filtrar por Turno:</label>
+                        <select id="filtro-turno">
+                            <option value="">Todos</option>
+                            <option value="manha">Manhã</option>
+                            <option value="tarde">Tarde</option>
+                            <option value="noite">Noite</option>
+                        </select>
+                    </div>
+                    <div class="col-6">
+                        <label for="filtro-dia-semana">Filtrar por Dia da Semana:</label>
+                        <select id="filtro-dia-semana">
+                            <option value="">Todos</option>
+                            <option value="1">Segunda-feira</option>
+                            <option value="2">Terça-feira</option>
+                            <option value="3">Quarta-feira</option>
+                            <option value="4">Quinta-feira</option>
+                            <option value="5">Sexta-feira</option>
+                            <option value="6">Sábado</option>
+                            <option value="0">Domingo</option>
+                        </select>
+                    </div>
+                </div>
+
+                <label for="filtro-duracao-minima">Duração mínima livre (minutos):</label>
+                <input type="number" id="filtro-duracao-minima" min="0" step="5" value="0" placeholder="Ex.: 60">
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="data-inicio">Data Início:</label>
+                        <input type="date" id="data-inicio" required>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="data-fim">Data Fim:</label>
+                        <input type="date" id="data-fim" required>
+                    </div>
+                </div>
+
+                <div class="toggle-wrap">
+                    <label class="toggle-label" for="usar-jornada-perfil">
+                        <input type="checkbox" id="usar-jornada-perfil" checked>
+                        Usar jornada automática do perfil do professor
+                    </label>
+                    <small>Quando ativo, usa disponibilidade cadastrada e turnos/carga do perfil.</small>
+                </div>
+
+                <div class="row">
+                    <div class="col-6">
+                        <label for="jornada-inicio">Jornada Início (Ex: 07:00):</label>
+                        <input type="time" id="jornada-inicio" value="07:00" required>
+                    </div>
+
+                    <div class="col-6">
+                        <label for="jornada-fim">Jornada Fim (Ex: 13:00):</label>
+                        <input type="time" id="jornada-fim" value="13:00" required>
+                    </div>
+                </div>
+
+                <div class="actions-row">
+                    <button type="submit" class="btn btn-primary">Verificar Disponibilidade</button>
+                    <button type="button" id="btn-limpar-filtros" class="btn btn-secondary">Limpar filtros</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card result-card hidden" id="disponibilidade-resultado">
+            <h2 class="card-title" id="resultado-titulo">Disponibilidade de: </h2>
+            <div id="resultado-metadata" class="result-meta"></div>
+            <div class="export-actions">
+                <button type="button" id="btn-exportar-csv" class="btn btn-secondary">Exportar CSV</button>
+                <button type="button" id="btn-imprimir" class="btn btn-secondary">Imprimir / PDF</button>
+            </div>
+            <div id="lista-disponibilidade" class="lista-disponibilidade">
+                </div>
+            <p id="msg-sem-disponibilidade" class="alert alert-danger hidden"></p>
+            <p id="msg-erro" class="alert alert-danger hidden"></p>
+        </div>
+
+    </main>
+
+    <script src="/js/disponibilidade-professores.js"></script>
+<script src="/js/logout-button.js"></script>
+</body>
+</html>
+

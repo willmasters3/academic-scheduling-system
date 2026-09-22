@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Equipamentos</title>
+    <link rel="stylesheet" href="../css/gerenciarequipamentos.css">
+    <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+<div class="dash-shell">
+
+    <aside class="dash-sidebar">
+        <div class="sidebar-brand">
+            <i class="fas fa-server"></i>
+            <span>Equipamentos</span>
+        </div>
+        <nav class="sidebar-nav">
+            <button class="nav-item active" data-tab="inventario">
+                <i class="fas fa-boxes"></i>
+                <span>Inventario</span>
+            </button>
+            <button class="nav-item" data-tab="vincular">
+                <i class="fas fa-link"></i>
+                <span>Editar Equipamentos</span>
+            </button>
+            <button class="nav-item" data-tab="cadastro">
+                <i class="fas fa-plus-circle"></i>
+                <span>Cadastrar Monitor</span>
+            </button>
+            <button class="nav-item" data-tab="cadastro-pc-manual">
+                <i class="fas fa-desktop"></i>
+                <span>Cadastrar PC Manual</span>
+            </button>
+            <button class="nav-item" data-tab="historico">
+                <i class="fas fa-history"></i>
+                <span>Histórico</span>
+            </button>
+            <a href="/relatorios-equipamentos" class="nav-item">
+                <i class="fas fa-file-export"></i>
+                <span>Relatórios</span>
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <a href="/dashboard" class="nav-item nav-item--muted">
+                <i class="fas fa-arrow-left"></i>
+                <span>Dashboard</span>
+            </a>
+        </div>
+    </aside>
+
+    <div class="dash-main">
+
+        <header class="dash-topbar">
+            <div class="topbar-title">
+                <p class="eyebrow">Inventario e Vinculacao</p>
+                <h1>Gerenciar Equipamentos</h1>
+            </div>
+            <div class="topbar-actions">
+                <button type="button" id="btnLimparFiltros" class="btn btn-ghost">
+                    <i class="fas fa-times"></i> Limpar Filtros
+                </button>
+            </div>
+        </header>
+
+        <section class="kpi-grid">
+            <div class="kpi-card kpi-card--blue">
+                <div class="kpi-icon"><i class="fas fa-desktop"></i></div>
+                <div class="kpi-info">
+                    <span id="resumoComputadoresTotal" class="kpi-value">0</span>
+                    <span class="kpi-label">Computadores</span>
+                </div>
+            </div>
+            <div class="kpi-card kpi-card--green">
+                <div class="kpi-icon"><i class="fas fa-check-circle"></i></div>
+                <div class="kpi-info">
+                    <span id="resumoComputadoresDisponiveis" class="kpi-value">0</span>
+                    <span class="kpi-label">PCs Disponiveis</span>
+                </div>
+            </div>
+            <div class="kpi-card kpi-card--purple">
+                <div class="kpi-icon"><i class="fas fa-tv"></i></div>
+                <div class="kpi-info">
+                    <span id="resumoMonitoresTotal" class="kpi-value">0</span>
+                    <span class="kpi-label">Monitores</span>
+                </div>
+            </div>
+            <div class="kpi-card kpi-card--orange">
+                <div class="kpi-icon"><i class="fas fa-plug"></i></div>
+                <div class="kpi-info">
+                    <span id="resumoItensVinculados" class="kpi-value">0</span>
+                    <span class="kpi-label">Itens Vinculados</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="tab-panel active" id="tab-inventario">
+            <div class="content-card content-card--compact">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Fluxo recomendado</p>
+                        <h2>Carregar, selecionar e vincular equipamentos</h2>
+                    </div>
+                </div>
+                <div class="section-info section-info--guide">
+                    <i class="fas fa-map-signs"></i>
+                    <div>
+                        <strong>Como usar esta tela:</strong>
+                        <p>Primeiro carregue o inventario. Depois escolha a unidade, o tipo de sala e a sala de destino. Em seguida use a busca ou os filtros para encontrar os equipamentos, marque os itens desejados e finalize em Vincular Selecionados.</p>
+                    </div>
+                </div>
+                <div class="inventory-steps-overview" aria-label="Passos para vincular equipamentos">
+                    <div class="inventory-step-chip inventory-step-chip--active">
+                        <span class="inventory-step-chip__number">1</span>
+                        <div>
+                            <strong>Carregue o inventario</strong>
+                            <span>Atualize a lista de PCs e monitores.</span>
+                        </div>
+                    </div>
+                    <div class="inventory-step-chip">
+                        <span class="inventory-step-chip__number">2</span>
+                        <div>
+                            <strong>Defina a sala destino</strong>
+                            <span>Escolha unidade, tipo de sala e sala.</span>
+                        </div>
+                    </div>
+                    <div class="inventory-step-chip">
+                        <span class="inventory-step-chip__number">3</span>
+                        <div>
+                            <strong>Filtre e marque</strong>
+                            <span>Use busca, filtros e selecione os itens.</span>
+                        </div>
+                    </div>
+                    <div class="inventory-step-chip inventory-step-chip--finish">
+                        <span class="inventory-step-chip__number">4</span>
+                        <div>
+                            <strong>Vincule os selecionados</strong>
+                            <span>Finalize o envio para a sala escolhida.</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="inventory-load-callout">
+                    <div class="inventory-load-callout__content">
+                        <p class="inventory-load-callout__eyebrow">Passo 1</p>
+                        <h3>Carregue o inventario antes de selecionar os equipamentos</h3>
+                        <p>Esse carregamento traz a lista atual de computadores e monitores para voce filtrar, pesquisar e marcar os itens corretos.</p>
+                    </div>
+                    <button type="button" id="btnCarregarEquipamentos" class="btn btn-primary btn-load-inventory">
+                        <i class="fas fa-sync-alt"></i> Carregar Inventario
+                    </button>
+                </div>
+                <div class="inventory-step-section">
+                    <div class="inventory-step-section__header">
+                        <span class="inventory-step-section__badge">Passo 2</span>
+                        <div>
+                            <strong>Escolha para onde os equipamentos vao</strong>
+                            <p>Defina abaixo a unidade, o tipo e a sala que receberao os itens selecionados.</p>
+                        </div>
+                    </div>
+                <div class="selectors-grid selectors-grid--inventory-bulk">
+                    <div class="form-group">
+                        <label for="inventarioUnidade">Unidade destino:</label>
+                        <select id="inventarioUnidade">
+                            <option value="">Selecione a unidade</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inventarioTipoSala">Tipo de sala destino:</label>
+                        <select id="inventarioTipoSala">
+                            <option value="">Selecione o tipo</option>
+                            <option value="academico">Academica</option>
+                            <option value="administrativa">Administrativa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="inventarioSala">Sala destino:</label>
+                        <select id="inventarioSala">
+                            <option value="">Selecione a sala</option>
+                        </select>
+                    </div>
+                </div>
+                </div>
+                <div class="bulk-actions-row">
+                    <div class="inventory-action-summary">
+                        <span class="inventory-step-section__badge inventory-step-section__badge--finish">Passo 4</span>
+                        <div>
+                            <strong>Concluir vinculacao</strong>
+                            <p>Depois de filtrar e marcar os itens nas listas abaixo, use estas acoes para selecionar em lote, limpar ou finalizar o vinculo.</p>
+                        </div>
+                    </div>
+                    <div class="inventory-action-controls">
+                        <span id="inventarioSelecaoResumo" class="counter-badge">0 item(ns) selecionado(s)</span>
+                        <div class="form-actions-inline form-actions-inline--inventory">
+                            <button type="button" id="btnSelecionarTodosVisiveisInventario" class="btn btn-ghost">
+                                <i class="fas fa-check-square"></i> Selecionar Visiveis
+                            </button>
+                            <button type="button" id="btnLimparSelecaoInventario" class="btn btn-ghost">
+                                <i class="fas fa-eraser"></i> Limpar Selecao
+                            </button>
+                            <button type="button" id="btnVincularSelecionadosInventario" class="btn btn-primary btn-inventory-confirm">
+                                <i class="fas fa-link"></i> Vincular Selecionados
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="section-info section-info--steps">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Resumo rapido:</strong>
+                        <p>1. Carregue o inventario. 2. Defina a sala destino. 3. Filtre ou pesquise os equipamentos. 4. Marque os itens desejados. 5. Clique em Vincular Selecionados.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-row">
+                <div class="inventory-panel">
+                    <div class="inventory-panel__header">
+                        <div>
+                            <h2><i class="fas fa-desktop"></i> Computadores</h2>
+                            <p id="resumoListaComputadores" class="panel-subtitle">Carregue o inventario para ver os PCs.</p>
+                        </div>
+                    </div>
+                    <div class="panel-filters">
+                        <input type="text" id="filtroComputadores" placeholder="Buscar por nome, patrimonio, IP, serial, usuario ou sala" class="filtro-input">
+                        <label class="toggle-filter">
+                            <input type="checkbox" id="filtroUnidadeComputadores">
+                            <span>Somente da unidade selecionada</span>
+                        </label>
+                        <div class="filter-chips" data-target="computadores">
+                            <button type="button" class="filter-chip active" data-status="all">Todos</button>
+                            <button type="button" class="filter-chip" data-status="available">Disponiveis</button>
+                            <button type="button" class="filter-chip" data-status="associated">Vinculados</button>
+                        </div>
+                    </div>
+                    <ul id="listaComputadores" class="lista lista-cards"></ul>
+                    <div id="paginacaoComputadores" class="paginacao"></div>
+                </div>
+                <div class="inventory-panel">
+                    <div class="inventory-panel__header">
+                        <div>
+                            <h2><i class="fas fa-tv"></i> Monitores</h2>
+                            <p id="resumoListaMonitores" class="panel-subtitle">Visualize monitores disponiveis e vinculados.</p>
+                        </div>
+                    </div>
+                    <div class="panel-filters">
+                        <input type="text" id="filtroMonitores" placeholder="Buscar por modelo, patrimonio, serie ou sala" class="filtro-input">
+                        <div class="filter-chips" data-target="monitores">
+                            <button type="button" class="filter-chip active" data-status="all">Todos</button>
+                            <button type="button" class="filter-chip" data-status="available">Disponiveis</button>
+                            <button type="button" class="filter-chip" data-status="associated">Vinculados</button>
+                        </div>
+                    </div>
+                    <ul id="listaMonitores" class="lista lista-cards"></ul>
+                    <div id="paginacaoMonitores" class="paginacao"></div>
+                </div>
+            </div>
+        </section>
+
+        <section class="tab-panel" id="tab-vincular">
+            <div class="content-card">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Edicao e movimentacao</p>
+                        <h2>Selecionar sala para editar equipamentos vinculados</h2>
+                    </div>
+                    <div class="form-actions-inline">
+                        <button type="button" id="btnSelecionarTodosSalaAtual" class="btn btn-ghost">
+                            <i class="fas fa-check-square"></i> Selecionar Todos da Sala
+                        </button>
+                        <button type="button" id="btnAbrirMoverSelecionados" class="btn btn-primary">
+                            <i class="fas fa-exchange-alt"></i> Mover Selecionados
+                        </button>
+                    </div>
+                </div>
+                <div class="selectors-grid">
+                    <div class="form-group">
+                        <label for="unidade">Unidade:</label>
+                        <select id="unidade"></select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tipoSala">Tipo de Sala:</label>
+                        <select id="tipoSala">
+                            <option value="">Selecione o Tipo</option>
+                            <option value="academico">Academica</option>
+                            <option value="administrativa">Administrativa</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="sala">Sala:</label>
+                        <select id="sala"></select>
+                    </div>
+                </div>
+                <div id="roomContext" class="room-context">
+                    <i class="fas fa-info-circle"></i>
+                    Selecione uma unidade, o tipo e a sala para visualizar os equipamentos ja vinculados e editar essa sala.
+                </div>
+                <div class="section-info section-info--guide">
+                    <i class="fas fa-random"></i>
+                    <div>
+                        <strong>Para que serve esta aba:</strong>
+                        <p>Use esta area para revisar os equipamentos que ja estao em uma sala, remover itens individuais, imprimir a lista ou selecionar varios equipamentos para mover todos de uma vez para outra sala.</p>
+                    </div>
+                </div>
+
+                <div id="moverSelecionadosPanel" class="move-panel" style="display:none;">
+                    <div class="content-card__header move-panel__header">
+                        <div>
+                            <p class="eyebrow">Mover equipamentos</p>
+                            <h2>Defina a nova sala dos itens selecionados</h2>
+                        </div>
+                        <span id="salaSelecaoResumo" class="counter-badge">0 item(ns) selecionado(s)</span>
+                    </div>
+                    <div class="section-info section-info--steps section-info--move">
+                        <i class="fas fa-people-arrows"></i>
+                        <div>
+                            <strong>Como mover em lote:</strong>
+                            <p>Marque os equipamentos na lista da sala atual, clique em Mover Selecionados, escolha a unidade, o tipo e a nova sala de destino e confirme a movimentacao.</p>
+                        </div>
+                    </div>
+                    <div class="selectors-grid selectors-grid--move-panel">
+                        <div class="form-group">
+                            <label for="moverUnidade">Unidade destino:</label>
+                            <select id="moverUnidade">
+                                <option value="">Selecione a unidade</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="moverTipoSala">Tipo de sala destino:</label>
+                            <select id="moverTipoSala">
+                                <option value="">Selecione o tipo</option>
+                                <option value="academico">Academica</option>
+                                <option value="administrativa">Administrativa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="moverSala">Sala destino:</label>
+                            <select id="moverSala">
+                                <option value="">Selecione a sala</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-actions-inline">
+                        <button type="button" id="btnConfirmarMoverSelecionados" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i> Confirmar Movimentacao
+                        </button>
+                        <button type="button" id="btnCancelarMoverSelecionados" class="btn btn-ghost">
+                            <i class="fas fa-times"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="content-card content-card--nopb">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Equipamentos da sala</p>
+                        <h2>Equipamentos da Sala</h2>
+                        <div id="printSalaHeader" class="print-room-header"></div>
+                    </div>
+                    <div class="table-counters">
+                            <button type="button" id="btnImprimirSala" class="btn btn-secondary btn-print-room" hidden>
+                                <i class="fas fa-print"></i> Imprimir Lista
+                            </button>
+                        <span id="contadorComputadores" class="counter-badge"></span>
+                        <span id="contadorSelecionadosSala" class="counter-badge counter-badge--subtle">0 selecionados</span>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table id="tabelaComputadoresAssociados">
+                        <thead>
+                            <tr>
+                                <th>Sel.</th>
+                                <th>Nome</th>
+                                <th>MAC</th>
+                                <th>CPU</th>
+                                <th>Memoria</th>
+                                <th>Disco</th>
+                                <th>Serial</th>
+                                <th>IP</th>
+                                <th>Patrimonio</th>
+                                <th>Acoes</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="tab-panel" id="tab-cadastro">
+            <div class="content-card content-card--narrow">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Cadastro de Monitor</p>
+                        <h2>Cadastrar Novo Monitor</h2>
+                    </div>
+                </div>
+
+                <p class="section-info">
+                    <i class="fas fa-info-circle"></i>
+                    Monitores nao possuem agente. Por isso, defina a localidade no momento do cadastro.
+                </p>
+
+                <form id="formMonitor">
+                    <input type="hidden" id="monitorExistenteId">
+                    <!-- Dados do equipamento -->
+                    <div class="form-section-label">Dados do Equipamento</div>
+                    <div class="monitor-form-grid">
+                        <div class="form-group">
+                            <label for="modelo">Modelo:</label>
+                            <input type="text" id="modelo" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="polegadas">Polegadas:</label>
+                            <input type="number" id="polegadas" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="numero_serie">Numero de Serie:</label>
+                            <input type="text" id="numero_serie" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patrimonio">Patrimonio:</label>
+                            <input type="text" id="patrimonio" required>
+                        </div>
+                    </div>
+
+                    <!-- Localidade -->
+                    <div class="form-section-label" style="margin-top:20px;">Localidade</div>
+                    <div class="selectors-grid">
+                        <div class="form-group">
+                            <label for="cadUnidade">Unidade:</label>
+                            <select id="cadUnidade" required>
+                                <option value="">Selecione a unidade</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cadTipoSala">Tipo de Sala:</label>
+                            <select id="cadTipoSala" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="academico">Academica</option>
+                                <option value="administrativa">Administrativa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="cadSala">Sala:</label>
+                            <select id="cadSala" required>
+                                <option value="">Selecione a sala</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-inline" style="margin-top:20px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Cadastrar e Associar Monitor
+                        </button>
+                    </div>
+                    <div id="monitorExistenteAviso" class="feedback-msg" style="margin-top:12px;"></div>
+                    <div id="formMonitorRetorno" class="feedback-msg" style="margin-top:12px;"></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="tab-panel" id="tab-cadastro-pc-manual">
+            <div class="content-card content-card--narrow">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Cadastro Manual</p>
+                        <h2>Adicionar Computador Manualmente</h2>
+                    </div>
+                </div>
+
+                <p class="section-info">
+                    <i class="fas fa-info-circle"></i>
+                    Use este cadastro quando o computador nao estiver enviando dados pelo agente. Patrimonio e sala sao obrigatorios.
+                </p>
+
+                <form id="formComputadorManual">
+                    <div class="form-section-label">Dados Basicos</div>
+                    <div class="monitor-form-grid">
+                        <div class="form-group">
+                            <label for="manualNomeComputador">Nome do Computador:</label>
+                            <input type="text" id="manualNomeComputador" placeholder="Ex: UC034LBM4098225">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualEnderecoMac">MAC:</label>
+                            <input type="text" id="manualEnderecoMac" placeholder="Opcional">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualCpuInfo">CPU:</label>
+                            <input type="text" id="manualCpuInfo" placeholder="Opcional">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualMemoriaRam">Memoria:</label>
+                            <input type="text" id="manualMemoriaRam" placeholder="Opcional">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualDiscoInfo">Disco:</label>
+                            <input type="text" id="manualDiscoInfo" placeholder="Opcional">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualSerialNumber">Serial:</label>
+                            <input type="text" id="manualSerialNumber" placeholder="Opcional">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualEnderecoIp">IP:</label>
+                            <input type="text" id="manualEnderecoIp" placeholder="Opcional">
+                        </div>
+                        <div class="form-group">
+                            <label for="manualPatrimonio">Patrimonio (obrigatorio):</label>
+                            <input type="text" id="manualPatrimonio" required>
+                        </div>
+                    </div>
+
+                    <div class="form-section-label" style="margin-top:20px;">Sala de Vinculacao (obrigatorio)</div>
+                    <div class="selectors-grid">
+                        <div class="form-group">
+                            <label for="manualPcUnidade">Unidade:</label>
+                            <select id="manualPcUnidade" required>
+                                <option value="">Selecione a unidade</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="manualPcTipoSala">Tipo de Sala:</label>
+                            <select id="manualPcTipoSala" required>
+                                <option value="">Selecione o tipo</option>
+                                <option value="academico">Academica</option>
+                                <option value="administrativa">Administrativa</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="manualPcSala">Sala:</label>
+                            <select id="manualPcSala" required>
+                                <option value="">Selecione a sala</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-actions-inline" style="margin-top:20px;">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save"></i> Cadastrar Computador Manual
+                        </button>
+                    </div>
+                    <div id="formComputadorManualRetorno" class="feedback-msg" style="margin-top:12px;"></div>
+                </form>
+            </div>
+        </section>
+
+        <section class="tab-panel" id="tab-historico">
+            <div class="content-card content-card--compact">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Histórico de Equipamentos</p>
+                        <h2>Eventos de movimentação e alteração</h2>
+                        <p class="history-note">Preencha os filtros abaixo e clique em Buscar Histórico para carregar os registros do banco.</p>
+                    </div>
+                    <div class="form-actions-inline">
+                        <button type="button" id="btnAtualizarHistorico" class="btn btn-primary btn-inventory-confirm">
+                            <i class="fas fa-search"></i> Buscar Histórico
+                        </button>
+                    </div>
+                </div>
+
+                <div class="selectors-grid selectors-grid--history">
+                    <div class="form-group">
+                        <label for="historicoTipo">Tipo de equipamento:</label>
+                        <select id="historicoTipo">
+                            <option value="">Todos</option>
+                            <option value="computador">Computador</option>
+                            <option value="monitor">Monitor</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="historicoNome">Nome / Modelo:</label>
+                        <input type="text" id="historicoNome" placeholder="Nome do PC ou modelo do monitor">
+                    </div>
+                    <div class="form-group">
+                        <label for="historicoPatrimonio">Patrimônio:</label>
+                        <input type="text" id="historicoPatrimonio" placeholder="Patrimônio">
+                    </div>
+                    <div class="form-group">
+                        <label for="historicoSala">Sala origem/destino:</label>
+                        <input type="text" id="historicoSala" placeholder="Nome da sala">
+                    </div>
+                </div>
+
+                <div class="section-info section-info--guide">
+                    <i class="fas fa-info-circle"></i>
+                    <div>
+                        <strong>Visão rápida:</strong>
+                        <p>Use este histórico para ver mudanças de sala e alterações de patrimônio/nome que já foram registradas no sistema.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="content-card content-card--nopb">
+                <div class="content-card__header">
+                    <div>
+                        <p class="eyebrow">Registros</p>
+                        <h2>Últimos eventos</h2>
+                    </div>
+                </div>
+                <div class="table-wrap">
+                    <table id="tabelaHistoricoEquipamentos">
+                        <thead>
+                            <tr>
+                                <th>Data</th>
+                                <th>Tipo</th>
+                                <th>Ação</th>
+                                <th>Equipamento</th>
+                                <th>Patrimônio</th>
+                                <th>Origem</th>
+                                <th>Destino</th>
+                                <th>Observação</th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                    <div id="historicoStatus" class="feedback-msg"></div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+<div id="modalEdicaoMonitor" class="modal">
+    <div class="modal-content">
+        <button class="modal-close close-button" aria-label="Fechar">&times;</button>
+        <div class="modal-header">
+            <i class="fas fa-tv modal-header__icon"></i>
+            <div>
+                <p class="eyebrow">Monitor</p>
+                <h2>Editar: <span id="monitorTitulo"></span></h2>
+            </div>
+        </div>
+        <form id="formEditarMonitor" class="modal-form-grid">
+            <input type="hidden" id="editMonitorId">
+            <div class="form-group">
+                <label for="editModelo">Modelo:</label>
+                <input type="text" id="editModelo" required>
+            </div>
+            <div class="form-group">
+                <label for="editPolegadas">Polegadas:</label>
+                <input type="number" id="editPolegadas" required>
+            </div>
+            <div class="form-group">
+                <label for="editNumeroSerie">Numero de Serie:</label>
+                <input type="text" id="editNumeroSerie" required>
+            </div>
+            <div class="form-group">
+                <label for="editPatrimonio">Patrimonio:</label>
+                <input type="text" id="editPatrimonio" required>
+            </div>
+            <div class="modal-footer">
+                <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Salvar Alteracoes</button>
+                <button type="button" id="btnRemoverAssociacao" class="btn btn-danger" style="display:none;"><i class="fas fa-unlink"></i> Remover da Sala</button>
+                <button type="button" id="btnExcluirPermanentemente" class="btn btn-dark-danger"><i class="fas fa-trash"></i> Excluir</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<div id="modalPatrimonioVinculo" class="modal" style="display:none;">
+    <div class="modal-content modal-content--wide">
+        <button class="modal-close" id="btnFecharPatrimonioVinculo" aria-label="Fechar">&times;</button>
+        <div class="modal-header">
+            <i class="fas fa-tags modal-header__icon"></i>
+            <div>
+                <p class="eyebrow">Vinculacao Rapida</p>
+                <h2>Patrimonio dos PCs Selecionados</h2>
+            </div>
+        </div>
+        <p class="section-info" id="resumoPatrimonioVinculo">
+            Preencha ou ajuste o patrimonio agora e conclua o vinculo em um unico fluxo.
+        </p>
+        <div id="listaPatrimonioVinculo" class="modal-info-grid"></div>
+        <div class="modal-footer">
+            <button type="button" id="btnConfirmarPatrimonioVinculo" class="btn btn-primary">
+                <i class="fas fa-link"></i> Salvar e Vincular
+            </button>
+            <button type="button" id="btnCancelarPatrimonioVinculo" class="btn btn-ghost">
+                <i class="fas fa-times"></i> Cancelar
+            </button>
+        </div>
+    </div>
+</div>
+
+
+<div id="modalConfigComputador" class="modal" style="display:none;">
+    <div class="modal-content modal-content--wide">
+        <button class="modal-close close" onclick="fecharModalConfigComputador()" aria-label="Fechar">&times;</button>
+        <div class="modal-header">
+            <i class="fas fa-desktop modal-header__icon"></i>
+            <div>
+                <p class="eyebrow">Computador</p>
+                <h2>Configurar Computador</h2>
+            </div>
+        </div>
+        <input type="hidden" id="cfgComputadorId">
+        <input type="hidden" id="cfgCadastroManual">
+        <div class="modal-section">
+            <div class="modal-section__title">
+                <i class="fas fa-info-circle"></i> Informacoes do Equipamento
+            </div>
+            <div id="cfgAvisoEdicaoManual" class="feedback-msg"></div>
+            <div class="modal-info-grid">
+                <div class="form-group">
+                    <label>Nome do Computador:</label>
+                    <input type="text" id="cfgNomeComputador" readonly class="input-readonly">
+                </div>
+                <div class="form-group">
+                    <label>MAC:</label>
+                    <input type="text" id="cfgEnderecoMac" readonly class="input-readonly" placeholder="Informe o MAC">
+                </div>
+                <div class="form-group">
+                    <label>Serial:</label>
+                    <input type="text" id="cfgSerialComputador" readonly class="input-readonly">
+                </div>
+                <div class="form-group">
+                    <label>CPU:</label>
+                    <input type="text" id="cfgCpuInfo" readonly class="input-readonly" placeholder="Informe a CPU">
+                </div>
+                <div class="form-group">
+                    <label>Memoria:</label>
+                    <input type="text" id="cfgMemoriaRam" readonly class="input-readonly" placeholder="Informe a memoria">
+                </div>
+                <div class="form-group">
+                    <label>Disco:</label>
+                    <input type="text" id="cfgDiscoInfo" readonly class="input-readonly" placeholder="Informe o disco">
+                </div>
+                <div class="form-group">
+                    <label>Endereco IP:</label>
+                    <input type="text" id="cfgIpComputador" readonly class="input-readonly">
+                </div>
+                <div class="form-group">
+                    <label>Patrimonio:</label>
+                    <input type="text" id="cfgPatrimonioComputador" placeholder="Informe o patrimonio">
+                </div>
+            </div>
+            <div class="modal-section__actions">
+                <button type="button" id="btnSalvarPatrimonioComputador" class="btn btn-secondary">
+                    <i class="fas fa-save"></i> Salvar Patrimonio
+                </button>
+            </div>
+            <div id="cfgRetornoPatrimonio" class="feedback-msg"></div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Confirmação de sobrescrita de monitor -->
+<div id="modalConfirmarSobrescritaMonitor" class="modal" style="display:none;">
+    <div class="modal-content modal-content--narrow">
+        <div class="modal-header">
+            <i class="fas fa-exclamation-triangle modal-header__icon" style="color:#c0392b;"></i>
+            <div>
+                <p class="eyebrow">Atencao</p>
+                <h2>Monitor ja cadastrado</h2>
+            </div>
+        </div>
+        <div class="modal-section">
+            <p id="modalConfirmSobrescritaTexto" style="margin:0 0 20px 0; line-height:1.5;"></p>
+            <div class="modal-footer">
+                <button type="button" id="btnConfirmarSobrescritaMonitor" class="btn btn-danger">
+                    <i class="fas fa-check"></i> Sim, atualizar
+                </button>
+                <button type="button" id="btnCancelarSobrescritaMonitor" class="btn btn-ghost">
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    document.querySelectorAll('.nav-item[data-tab]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
+            document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+            btn.classList.add('active');
+            document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+    });
+</script>
+<script src="/js/gerenciarequipamentos.js"></script>
+<script src="/js/logout-button.js"></script>
+</body>
+</html>
+
+

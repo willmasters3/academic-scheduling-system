@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Agendamentos</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="../css/alteraagenda.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <main class="page-shell">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Gestão de agenda</p>
+                <h1>Alterar Agendamentos</h1>
+                <p class="header-subtitle">Consulte, filtre, edite em lote e exclua agendamentos com segurança.</p>
+            </div>
+            <nav class="quick-links">
+                <a href="../"><i class="fas fa-home"></i> Início</a>
+                <a href="/dashboard"><i class="fas fa-th-large"></i> Dashboard</a>
+                <a href="/altera-dados"><i class="fas fa-door-open"></i> Altera dados Salas</a>
+                <a href="/agenda-sala"><i class="fas fa-calendar-plus"></i> Criar Agendamento</a>
+                <a href="/cadastro"><i class="fas fa-user-plus"></i> Cadastro</a>
+            </nav>
+        </header>
+
+        <section class="toolbar-grid">
+            <article class="card unit-card">
+                <h3>Unidade</h3>
+                <label for="unidadeSelect">Selecione a Unidade:</label>
+                <select id="unidadeSelect">
+                    <option value="">Selecione uma unidade</option>
+                </select>
+            </article>
+
+            <article class="card danger-card">
+                <div class="card-title-row">
+                    <h3>Exclusão por intervalo</h3>
+                    <button id="btnFiltroExclusao" class="icon-btn toggle-btn" type="button" aria-label="Mostrar ou ocultar exclusão por intervalo" aria-expanded="false">
+                        <span class="material-icons">filter_list</span>
+                        <span class="toggle-label">Mostrar exclusão por intervalo</span>
+                    </button>
+                </div>
+                <div id="filtrosExclusao" class="filtros" style="display: none;">
+                    <div class="filter-field">
+                        <label for="dataInicio">Data de Início:</label>
+                        <input type="date" id="dataInicio">
+                    </div>
+                    <div class="filter-field">
+                        <label for="dataFim">Data de Fim:</label>
+                        <input type="date" id="dataFim">
+                    </div>
+                    <button id="btnExcluirIntervalo" type="button">Excluir Agendamentos</button>
+                </div>
+                <div class="danger-hint">
+                    <p><strong>⚠️ Atenção: esta ação é irreversível.</strong></p>
+                    <p>A <strong>Exclusão por intervalo</strong> apaga permanentemente <strong>todos</strong> os agendamentos de todas as salas da unidade selecionada dentro do período informado. Isso inclui aulas, reservas e atividades cadastradas — nenhum registro será mantido.</p>
+                    <p>Use somente quando houver necessidade real, como recesso escolar, fechamento de unidade ou replanejamento do calendário letivo. <strong>Não é possível desfazer esta operação.</strong></p>
+                </div>
+            </article>
+
+            <article class="card coordinator-swap-card filter-card">
+                <div class="card-title-row">
+                    <h3>Troca de Sala Direta (Coordenador)</h3>
+                </div>
+                <p class="swap-subtitle">Selecione o professor de origem e quantas datas quiser (somente hoje e futuras). O sistema simula os pares compatíveis e mostra o que faltou.</p>
+                <div class="filtros coordinator-swap-grid">
+                    <div class="filter-field">
+                        <label for="trocaCoordProfessorOrigem">Professor origem:</label>
+                        <select id="trocaCoordProfessorOrigem">
+                            <option value="">Selecione um professor</option>
+                        </select>
+                    </div>
+                    <div class="filter-field">
+                        <label for="trocaCoordAgendamentosOrigem">Agendamentos origem (múltipla seleção):</label>
+                        <select id="trocaCoordAgendamentosOrigem" multiple size="8"></select>
+                    </div>
+                    <button id="btnSimularTrocaCoordenador" type="button">Simular pares de troca</button>
+                </div>
+
+                <div class="swap-result-card">
+                    <p id="trocaCoordResumo" class="swap-result-summary">Nenhuma simulação realizada.</p>
+                    <div class="table-wrap swap-result-table-wrap">
+                        <table class="table swap-result-table">
+                            <thead>
+                                <tr>
+                                    <th>Usar</th>
+                                    <th>Origem</th>
+                                    <th>Destino sugerido</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="trocaCoordResultadoBody">
+                                <tr>
+                                    <td colspan="4">Escolha professor e agendamentos de origem, depois clique em Simular pares de troca.</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="filtros coordinator-swap-grid">
+                    <div class="filter-field">
+                        <button id="btnExecutarTrocaCoordenador" type="button">Executar trocas selecionadas</button>
+                    </div>
+                </div>
+                <p id="trocaCoordFeedback" class="swap-feedback" aria-live="polite"></p>
+            </article>
+        </section>
+
+        <section class="card agendamentos">
+            <article class="filter-card filter-card-inline">
+                <div class="card-title-row">
+                    <h3>Filtros de busca</h3>
+                    <button id="btnFiltro" class="icon-btn toggle-btn" type="button" aria-label="Mostrar ou ocultar filtros" aria-expanded="true">
+                        <span class="material-icons">filter_list</span>
+                        <span class="toggle-label">Ocultar filtros</span>
+                    </button>
+                </div>
+                <p class="hint-inline">Ajuste os campos para refinar a busca. Se preferir, você pode ocultar este bloco.</p>
+                <div id="filtros" class="filtros">
+                    <div class="filter-field">
+                        <label for="filtroSala">Sala:</label>
+                        <input type="text" id="filtroSala" placeholder="Nome da sala">
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroProfessor">Professor:</label>
+                        <input type="text" id="filtroProfessor" placeholder="Nome do professor">
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroDataInicio">Data de Início:</label>
+                        <input type="date" id="filtroDataInicio">
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroDataFim">Data de Fim:</label>
+                        <input type="date" id="filtroDataFim">
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroTurno">Selecione o Turno:</label>
+                        <select id="filtroTurno" class="form-control">
+                            <option value="">Todos os turnos</option>
+                            <option value="manha">Manhã (6:00 - 13:00)</option>
+                            <option value="tarde">Tarde (13:15 - 17:15)</option>
+                            <option value="noite">Noite (17:15 - 23:59)</option>
+                        </select>
+                    </div>
+
+                    <div class="filter-field">
+                        <label for="filtroDiaSemana">Dia da Semana:</label>
+                        <select id="filtroDiaSemana" class="form-control">
+                            <option value="">Todos os dias</option>
+                            <option value="0">Domingo</option>
+                            <option value="1">Segunda-feira</option>
+                            <option value="2">Terça-feira</option>
+                            <option value="3">Quarta-feira</option>
+                            <option value="4">Quinta-feira</option>
+                            <option value="5">Sexta-feira</option>
+                            <option value="6">Sábado</option>
+                        </select>
+                    </div>
+
+                    <button id="btnAplicarFiltro" type="button">Aplicar Filtro</button>
+                </div>
+            </article>
+
+            <div class="list-header">
+                <div class="select-all-container">
+                    <label for="selectAllAgendamentos">
+                        <input type="checkbox" id="selectAllAgendamentos" class="selectAllAgendamentos"> Selecionar Todos
+                    </label>
+                </div>
+                <div class="bulk-actions">
+                    <button id="btnEditarSelecionados" style="display:none;" type="button">Editar Selecionados</button>
+                    <button id="btnExcluirSelecionados" style="display:none;" type="button">Excluir Selecionados</button>
+                </div>
+            </div>
+
+            <div class="container mt-4">
+                <h2 class="text-center mt-3 mb-3">Agendamentos</h2>
+                <div class="table-wrap">
+                    <table class="table table-bordered">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Selecionar</th>
+                                <th>Ambiente</th>
+                                <th>Professor</th>
+                                <th>Data de Início</th>
+                                <th>Hora de Início</th>
+                                <th>Data de Fim</th>
+                                <th>Hora de Fim</th>
+                                <th>Tipo de Atividade</th>
+                                <th>Motivo</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="agendamentosList"></tbody>
+                    </table>
+                </div>
+                <div id="paginacao" class="paginacao"></div>
+            </div>
+        </section>
+
+        <footer>
+            <p>Desenvolvido pela equipe Lean Demo Unidade Centro</p>
+            <div id="informacaoSala" class="informacao-sala">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            </div>
+        </footer>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/luxon@2.0.2/build/global/luxon.min.js"></script>
+    <script src="../js/alteraagenda.js"></script>
+<script src="/js/logout-button.js"></script>
+</body>
+</html>
+
+

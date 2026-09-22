@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Docente — Perfil do Professor</title>
+    <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg">
+    <link rel="stylesheet" href="/css/gestao-docente.css">
+    <link rel="stylesheet" href="/css/gestao-docente-professores.css">
+    <link rel="stylesheet" href="/css/gestao-docente-perfil.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="gd-shell">
+    <div id="gdSidebarMount"></div>
+    <main class="gd-main">
+        <div id="gdHeaderMount"></div>
+        <div class="gd-content gpp-content">
+            <div class="gpp-toolbar"><a class="gd-button gd-button-outline gp-profile-link" href="/gestao-docente/professores?restaurar=1">← Voltar para lista</a>
+                <form id="profileFilters" class="gd-filter-grid gpp-filters">
+                    <label><span>Unidade</span><select id="profileUnit"><option value="">Todas as unidades autorizadas</option></select></label>
+                    <label><span>Período</span><select id="profilePeriod"><option value="current-month">Mês atual</option><option value="current-week">Semana atual</option><option value="next-week">Próxima semana</option><option value="custom">Personalizado</option></select></label>
+                    <div id="profileDates" class="gd-custom-dates is-hidden"><label><span>Data inicial</span><input id="profileStart" type="date"></label><label><span>Data final</span><input id="profileEnd" type="date"></label><button class="gd-button gd-button-primary" type="submit">Aplicar período</button></div>
+                </form>
+            </div>
+            <div id="profileError" class="gd-message is-hidden" role="alert"></div>
+            <div id="profileLoading" class="gd-loading" role="status"><span class="gd-spinner"></span><p>Carregando perfil do professor...</p></div>
+            <div id="profileContent" class="is-hidden">
+                <section class="gd-panel gpp-identity" aria-labelledby="professorName">
+                    <span id="professorAvatar" class="gd-avatar gpp-avatar" aria-hidden="true"></span>
+                    <div class="gpp-name"><h2 id="professorName">--</h2><p id="professorUnits">--</p></div>
+                    <dl class="gpp-cadastro"><div><dt>Matrícula / Login</dt><dd id="professorLogin">--</dd></div><div><dt>Turno cadastrado</dt><dd id="professorShift">--</dd></div><div><dt>Carga semanal contratual</dt><dd id="professorWeekly">--</dd></div><div><dt>Situação cadastral</dt><dd>--</dd></div></dl>
+                </section>
+                <section class="gd-panel gpp-classification" aria-labelledby="classificationTitle">
+                    <h2 id="classificationTitle">Classificação do usuário</h2>
+                    <p id="classificationHelp">Essa classificação define se o usuário aparece como docente na Gestão Docente. Não altera suas permissões de acesso ao sistema.</p>
+                    <form id="classificationForm" class="gd-filters">
+                        <label for="profileClassification"><span>Vínculo docente</span><select id="profileClassification" aria-describedby="classificationHelp"><option value="">Não informado</option><option value="1">Docente</option><option value="0">Não docente</option></select></label>
+                        <button id="saveClassification" type="submit" class="gd-button gd-button-primary">Salvar classificação</button>
+                    </form>
+                    <p id="classificationMessage" role="status" aria-live="polite"></p>
+                </section>
+                <p id="selectedPeriod" class="gpp-period" aria-live="polite"></p>
+                <section class="gd-kpi-grid gpp-kpis" aria-label="Indicadores acadêmicos do professor">
+                    <article class="gd-kpi"><span class="gd-kpi-icon is-blue"><i class="far fa-calendar-check"></i></span><div><span>Horas previstas</span><strong id="profileExpected" class="gp-blue" tabindex="0" data-help="Carga horária dos planejamentos acadêmicos aplicáveis a este professor no período selecionado.">--</strong><small id="profilePlansCount"></small></div></article>
+                    <article class="gd-kpi"><span class="gd-kpi-icon is-green"><i class="far fa-clock"></i></span><div><span>Horas agendadas</span><strong id="profileScheduled" class="gp-green" tabindex="0" data-help="Horas dos fatos ativos vinculados aos planejamentos deste professor. Não mede presença ou aula executada.">--</strong><small>Em registros vinculados</small></div></article>
+                    <article class="gd-kpi"><span class="gd-kpi-icon is-amber"><i class="fas fa-hourglass-half"></i></span><div><span>Horas faltantes</span><strong id="profileMissing" tabindex="0" data-help="Carga prevista que ainda não possui horas de agendamento vinculadas. Saldos positivos apurados por planejamento, como na Visão Geral.">--</strong><small>Aguardando agendamento</small></div></article>
+                    <article class="gd-kpi"><span class="gd-kpi-icon is-purple"><i class="fas fa-chart-pie"></i></span><div><span>Cobertura</span><strong id="profileCoverage" class="gp-purple" tabindex="0" data-help="Total agendado dividido pelo total previsto. Não é média dos percentuais das UCs e pode ultrapassar 100%.">--</strong><small id="profileExcess"></small></div></article>
+                </section>
+                <nav class="gpp-section-nav" aria-label="Seções do perfil"><a href="#profileUcs" class="gd-button gd-button-primary gp-profile-link">Unidades Curriculares</a><a href="#profileBookings" class="gd-button gd-button-outline gp-profile-link">Agendamentos</a></nav>
+                <div class="gpp-grid">
+                    <section id="profileUcs" class="gd-panel gpp-table-panel" aria-labelledby="ucsTitle">
+                        <div class="gd-panel-header"><div><h2 id="ucsTitle">Unidades Curriculares do Professor</h2><p>Obrigações acadêmicas vinculadas ao docente no período selecionado.</p></div></div>
+                        <p class="gp-table-note">Uma carga por planejamento, mesmo com várias alocações. Planejamentos compartilhados mantêm a carga integral; as horas agendadas abaixo são deste professor.</p>
+                        <div class="gd-table-scroll" tabindex="0" role="region" aria-label="Planejamentos e UCs"><table class="gpp-table"><thead><tr><th scope="col">UC</th><th scope="col">Curso</th><th scope="col">Turma</th><th scope="col">Período</th><th scope="col">Previsto</th><th scope="col">Agendado</th><th scope="col">Faltam</th><th scope="col">Cobertura</th><th scope="col">Situação</th></tr></thead><tbody id="profileUcRows"></tbody></table></div>
+                        <div class="gp-pagination"><span id="ucPageSummary"></span><nav aria-label="Paginação das UCs"><button id="ucPrev" type="button" class="gd-button gd-button-outline">Anterior</button><button id="ucNext" type="button" class="gd-button gd-button-outline">Próxima</button></nav></div>
+                    </section>
+                    <aside class="gd-panel gpp-side" aria-labelledby="hoursTitle">
+                        <h2 id="hoursTitle">Distribuição das horas</h2><p>Mesmos valores dos indicadores do período.</p>
+                        <div id="profileRing" class="gpp-ring" role="img"><div><strong id="ringExpected">--</strong><small>Previstas</small></div></div>
+                        <dl class="gpp-legend"><div><dt><i class="gpp-dot gpp-dot-green"></i>Agendadas</dt><dd id="ringScheduled">--</dd></div><div><dt><i class="gpp-dot gpp-dot-amber"></i>Faltantes</dt><dd id="ringMissing">--</dd></div><div><dt><i class="gpp-dot gpp-dot-purple"></i>Excesso</dt><dd id="ringExcess" tabindex="0" data-help="Horas acima da carga prevista, apuradas por planejamento. Já estão incluídas nas horas agendadas.">--</dd></div></dl>
+                        <p class="gpp-small">Excesso já está incluído em agendadas. A rosca representa agendadas e faltantes; o centro informa a carga prevista.</p>
+                    </aside>
+                    <section id="profileBookings" class="gd-panel gpp-table-panel" aria-labelledby="bookingsTitle">
+                        <div class="gd-panel-header"><div><h2 id="bookingsTitle">Últimos agendamentos do professor</h2><p>Registros do sistema no período selecionado, ordenados por data.</p></div></div>
+                        <p class="gp-table-note">Histórico separado da cobertura acadêmica. Motivo não é vínculo com UC ou turma.</p>
+                        <div id="profileLegacy" class="gpp-legacy" role="status"></div>
+                        <div class="gd-table-scroll" tabindex="0" role="region" aria-label="Últimos agendamentos"><table class="gpp-table"><thead><tr><th scope="col">Data</th><th scope="col">Horário</th><th scope="col">Sala</th><th scope="col">Turma</th><th scope="col">UC</th><th scope="col">Motivo</th><th scope="col">Duração</th></tr></thead><tbody id="profileBookingRows"></tbody></table></div>
+                        <div class="gp-pagination"><span id="bookingPageSummary"></span><nav aria-label="Paginação dos agendamentos"><button id="bookingPrev" type="button" class="gd-button gd-button-outline">Anterior</button><button id="bookingNext" type="button" class="gd-button gd-button-outline">Próxima</button></nav></div>
+                    </section>
+                    <aside class="gd-panel gpp-side" aria-labelledby="summaryTitle"><h2 id="summaryTitle">Resumo por situação</h2><p>Planejamentos classificados pela regra da Visão Geral para este professor e período.</p><dl id="profileSituations" class="gpp-legend"></dl><p class="gpp-small">“Sem classificação” refere-se a planejamentos. Fatos legados são informados separadamente no histórico.</p></aside>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+<div id="metricTooltip" class="gp-tooltip is-hidden" role="tooltip"></div>
+<script src="/js/gestao-docente-common.js"></script>
+<script src="/js/gestao-docente-perfil.js"></script>
+<script src="/js/logout-button.js"></script>
+</body>
+</html>

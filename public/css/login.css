@@ -1,0 +1,121 @@
+/* CSS para o formulário e outros estilos */
+@import url('https://fonts.googleapis.com/css2?family=Sansita+Swashed:wght@300..900&display=swap');
+
+body {
+    display: flex;
+    flex-direction: column; /* Organiza a página verticalmente */
+    min-height: 100vh; /* Faz com que o body ocupe a altura total da tela */
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    position: relative; /* Necessário para um correto posicionamento do footer */
+    justify-content: center; /* Centraliza verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+}
+
+body::before {
+    content: "";
+    position: absolute; /* Use absolute para usar com min-height */
+    top: 0; /* Inicia na parte superior */
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url("/imagens/bg-demo.svg");
+    background-size: cover;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+h1 {
+    font-family: 'Arial, sans-serif', cursive; /* Fonte estilizada */
+    margin-bottom: 20px;
+    animation: letterMove 1s infinite; /* Animação na palavra "Login" */
+}
+
+@keyframes letterMove {
+    0%, 100% {
+        transform: translateY(0); /* Posição inicial */
+    }
+    50% {
+        transform: translateY(-5px); /* Movimentação para cima */
+    }
+}
+
+form {
+    display: flex;
+    flex-direction: column; /* Organiza os inputs verticalmente */
+    align-items: center; /* Centraliza horizontalmente */
+    border-radius: 8px; /* Adiciona borda arredondada ao formulário */
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.8); /* Fundo branco com transparência */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Sombra para efeito de profundidade */
+}
+
+.login-card {
+    width: min(92vw, 420px);
+}
+
+.login-card form {
+    width: 100%;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#temporaryPasswordForm h2 {
+    font-size: 1.1rem;
+    margin: 0 0 10px;
+    color: #154680;
+}
+
+.temporary-message {
+    margin: 0 0 12px;
+    color: #2f4b66;
+    font-size: 0.93rem;
+    line-height: 1.35;
+    text-align: center;
+}
+
+.temporary-feedback {
+    min-height: 22px;
+    margin: 6px 0 0;
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: #b12525;
+    text-align: center;
+}
+
+.temporary-feedback.ok {
+    color: #157a4d;
+}
+
+input {
+    margin: 10px 0; /* Espaçamento entre os inputs */
+    padding: 10px;
+    border: 2px solid #007BFF; /* Borda azul */
+    border-radius: 8px; /* Borda arredondada */
+    font-size: 16px; /* Tamanho da fonte */
+    transition: border-color 0.3s; /* Transição suave para a cor da borda */
+}
+
+input:hover {
+    border-color: #0056b3; /* Borda muda de cor ao passar o mouse */
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px; /* Borda arredondada */
+    background-color: #007BFF; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor para pointer */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+button:hover {
+    background-color: #0056b3; /* Cor de fundo do botão ao passar o mouse */
+}

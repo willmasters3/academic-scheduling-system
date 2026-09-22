@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão Docente — Professores</title>
+    <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg">
+    <link rel="stylesheet" href="/css/gestao-docente.css">
+    <link rel="stylesheet" href="/css/gestao-docente-professores.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+<div class="gd-shell">
+    <div id="gdSidebarMount"></div>
+    <main class="gd-main">
+        <div id="gdHeaderMount"></div>
+        <div class="gd-content gp-content">
+            <div class="gp-notice"><i class="fas fa-circle-info" aria-hidden="true"></i> Área exclusiva da Coordenação e Administração/TI. Acompanhe os planejamentos e agendamentos registrados dos docentes.</div>
+            <section class="gd-kpi-grid" id="professorKpis" aria-label="Indicadores dos filtros aplicados">
+                <article class="gd-kpi"><span class="gd-kpi-icon is-blue"><i class="fas fa-users"></i></span><div><span>Total de professores</span><strong id="kpiTotal">--</strong><small>Nos filtros aplicados</small></div><button class="gd-info" type="button" data-help="Docentes do cadastro que correspondem aos filtros, incluindo os sem planejamento quando não há filtro acadêmico restritivo." aria-label="Sobre o total de professores">i</button></article>
+                <article class="gd-kpi"><span class="gd-kpi-icon is-blue"><i class="far fa-calendar-check"></i></span><div><span>Horas previstas</span><strong id="kpiExpected">--</strong><small>Obrigações sem duplicidade</small></div><button class="gd-info" type="button" data-help="Carga dos planejamentos acadêmicos aplicáveis ao período. Cada obrigação compartilhada é contada uma única vez no total geral." aria-label="Sobre as horas previstas">i</button></article>
+                <article class="gd-kpi"><span class="gd-kpi-icon is-green"><i class="far fa-clock"></i></span><div><span>Horas agendadas</span><strong id="kpiScheduled">--</strong><small>Registros ativos vinculados</small></div><button class="gd-info" type="button" data-help="Soma dos fatos de agendamento ativos dos docentes filtrados, vinculados aos planejamentos e dentro das datas selecionadas. Não mede presença." aria-label="Sobre as horas agendadas">i</button></article>
+                <article class="gd-kpi"><span class="gd-kpi-icon is-amber"><i class="fas fa-hourglass-half"></i></span><div><span>Horas faltantes</span><strong id="kpiMissing">--</strong><small>Saldo por planejamento</small></div><button class="gd-info" type="button" data-help="Soma dos saldos positivos entre previsto e agendado por planejamento. Excesso de uma UC não compensa o saldo de outra." aria-label="Sobre as horas faltantes">i</button></article>
+                <article class="gd-kpi"><span class="gd-kpi-icon is-purple"><i class="fas fa-chart-pie"></i></span><div><span>Cobertura geral</span><strong id="kpiCoverage">--</strong><small id="excessTotal">Sem dados carregados</small></div><button class="gd-info" type="button" data-help="Horas agendadas aplicáveis divididas pela carga prevista única, vezes 100. Não é média dos percentuais dos professores. Excesso é exibido separadamente." aria-label="Sobre a cobertura geral">i</button></article>
+            </section>
+            <section class="gd-filter-card" aria-labelledby="filtersTitle">
+                <h2 id="filtersTitle">Filtros</h2>
+                <form id="professorFilters" class="gd-filter-grid gp-filters">
+                    <label><span>Unidade</span><select id="filterUnit"><option value="">Todas as unidades</option></select></label>
+                    <label><span>Período</span><select id="filterPeriod"><option value="current-month">Mês atual</option><option value="current-week">Semana atual</option><option value="next-week">Próxima semana</option><option value="custom">Personalizado</option></select></label>
+                    <label><span>Professor</span><input id="filterName" type="search" maxlength="150" placeholder="Buscar por nome"></label>
+                    <label id="turnoFilter"><span>Turno cadastrado</span><select id="filterShift"><option value="">Todos</option><option value="manha">Manhã</option><option value="tarde">Tarde</option><option value="noite">Noite</option></select></label>
+                    <label><span>Curso</span><select id="filterCourse"><option value="">Todos os cursos</option></select></label>
+                    <label><span>Situação dos planejamentos</span><select id="filterStatus"><option value="">Todas</option><option value="CRITICO">Crítico</option><option value="ATENCAO">Atenção</option><option value="ADEQUADO">Adequado</option><option value="COM_EXCESSO">Com excesso</option><option value="SEM_PLANEJAMENTO">Sem planejamento</option></select></label>
+                    <label class="gp-checkbox-filter"><input id="filterOnlyTeachers" type="checkbox" checked><span>Somente professores</span></label>
+                    <div class="gp-filter-actions"><button class="gd-button gd-button-primary" type="submit">Aplicar filtros</button><button id="clearFilters" class="gd-button gd-button-outline" type="button">Limpar</button></div>
+                    <div id="customDates" class="gd-custom-dates is-hidden"><label><span>Data inicial</span><input id="filterStart" type="date"></label><label><span>Data final</span><input id="filterEnd" type="date"></label></div>
+                </form>
+            </section>
+            <div id="screenMessage" class="gd-message is-hidden" role="alert"></div>
+            <div id="loadingState" class="gd-loading" role="status"><span class="gd-spinner"></span><p>Carregando professores...</p></div>
+            <section id="professoresContent" class="gd-panel gp-table-panel is-hidden" aria-labelledby="listTitle">
+                <div class="gd-panel-header"><div><h2 id="listTitle">Lista de professores</h2><p>Dados cadastrais e carga acadêmica no período selecionado.</p></div><span id="resultCount" role="status"></span></div>
+                <p class="gp-table-note">Cargas compartilhadas aparecem em cada docente vinculado; o total geral conta cada obrigação uma vez. Situação mostra as classificações dos planejamentos, não uma avaliação do professor. <button class="gd-info gp-inline-info" type="button" data-help="Na linha, horas agendadas são somente as registradas para aquele docente. A situação considera o planejamento completo e seu período, usando a mesma regra da Visão Geral. Por isso, uma obrigação compartilhada pode estar adequada mesmo com poucas horas individuais." aria-label="Entenda as cargas compartilhadas e a situação">i</button></p>
+                <div class="gd-table-scroll" tabindex="0" role="region" aria-label="Tabela de professores com rolagem horizontal">
+                    <table class="gp-table"><thead><tr>
+                        <th scope="col" aria-sort="ascending"><button type="button" data-sort="nome">Professor ↕</button></th>
+                        <th scope="col">Unidade</th><th scope="col">Turno</th><th scope="col">Carga semanal</th>
+                        <th scope="col"><button type="button" data-sort="previsto">Horas previstas ↕</button></th>
+                        <th scope="col"><button type="button" data-sort="agendado">Horas agendadas ↕</button></th>
+                        <th scope="col"><button type="button" data-sort="faltante">Horas faltantes ↕</button></th>
+                        <th scope="col"><button type="button" data-sort="cobertura">Cobertura ↕</button></th>
+                        <th scope="col">Situação dos planejamentos</th><th scope="col">Ações</th>
+                    </tr></thead><tbody id="professorRows"></tbody></table>
+                </div>
+                <div class="gp-pagination"><span id="pageSummary"></span><label>Por página <select id="pageSize"><option>10</option><option selected>25</option><option>50</option><option>100</option></select></label><nav aria-label="Paginação de professores"><button id="prevPage" class="gd-button gd-button-outline" type="button">Anterior</button><span id="pageNumber" aria-live="polite"></span><button id="nextPage" class="gd-button gd-button-outline" type="button">Próxima</button></nav></div>
+            </section>
+        </div>
+    </main>
+</div>
+<div id="metricTooltip" class="gp-tooltip is-hidden" role="tooltip"></div>
+<script src="/js/gestao-docente-common.js"></script>
+<script src="/js/gestao-docente-professores.js"></script>
+<script src="/js/logout-button.js"></script>
+</body>
+</html>

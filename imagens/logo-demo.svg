@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="420" height="120" viewBox="0 0 420 120" role="img" aria-labelledby="title desc">
+  <title id="title">Sistema de Agendamentos Demo</title>
+  <desc id="desc">Marca neutra da versao demonstrativa.</desc>
+  <rect width="420" height="120" rx="18" fill="#ffffff"/>
+  <rect x="24" y="24" width="72" height="72" rx="16" fill="#0f766e"/>
+  <path d="M42 48h36M42 61h36M42 74h22" stroke="#ffffff" stroke-width="8" stroke-linecap="round"/>
+  <circle cx="78" cy="74" r="7" fill="#f59e0b"/>
+  <text x="116" y="55" fill="#111827" font-family="Arial, sans-serif" font-size="28" font-weight="700">Agenda Demo</text>
+  <text x="118" y="83" fill="#4b5563" font-family="Arial, sans-serif" font-size="16">salas, docentes e recursos</text>
+</svg>

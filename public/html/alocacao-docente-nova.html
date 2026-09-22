@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Nova Alocação Docente</title>
+     <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg">
+    <link rel="stylesheet" href="/css/alocacao-docente.css">
+</head>
+
+<body>
+    <header class="module-header">
+        <div>
+            <h1 id="tituloPagina">Nova Alocação</h1>
+            <p>Cadastre um vínculo pedagógico independente de sala.</p>
+        </div>
+        <nav class="module-nav"><a href="/alocacao-docente">Início do módulo</a><a
+                href="/alocacao-docente/coordenacao">Painel da Coordenação</a></nav>
+    </header>
+    <main class="module-main">
+        <section class="panel">
+            <form id="formAlocacao">
+                <div class="form-grid">
+                    <div class="field"><label for="unidade">Unidade</label><select id="unidade" required></select></div>
+                    <div class="field"><label for="professor">Docente</label><select id="professor" required></select>
+                    </div>
+                    
+                    <div class="field"><label for="tipo">Tipo</label><select id="tipo" required>
+                            <option value="PRESENCIAL">Presencial</option>
+                            <option value="EAD">EAD / Classroom</option>
+                            <option value="PREPARACAO">Preparação / Planejamento</option>
+                        </select></div>
+                    <div class="field"><label for="turno">Turno</label><select id="turno" required>
+                            <option value="MANHA">Manhã</option>
+                            <option value="TARDE">Tarde</option>
+                            <option value="NOITE">Noite</option>
+                        </select></div>
+                    <div class="field"><label for="curso">Curso</label><select id="curso" required></select></div>
+                    <div class="field"><label for="uc">Unidade Curricular</label><select id="uc" required></select>
+                    </div>
+                    <div class="field"><label for="carga">Carga Horária Total</label><input id="carga" readonly></div>
+                    <div class="field"><label for="turma">Código Reduzido da Turma</label><select id="turma"
+                            required></select></div>
+                    <fieldset class="days field full">
+                        <legend>Dias da semana</legend>
+                        <div class="days-grid"><label><input type="checkbox" name="dias" value="1">
+                                Segunda</label><label><input type="checkbox" name="dias" value="2">
+                                Terça</label><label><input type="checkbox" name="dias" value="3">
+                                Quarta</label><label><input type="checkbox" name="dias" value="4">
+                                Quinta</label><label><input type="checkbox" name="dias" value="5">
+                                Sexta</label><label><input type="checkbox" name="dias" value="6"> Sábado</label></div>
+                    </fieldset>
+                    <div class="field"><label for="inicio">Data de início</label><input id="inicio" type="date"
+                            required></div>
+                    <div class="field"><label for="fim">Data de término</label><input id="fim" type="date" required>
+                    </div>
+                    <div class="field full"><label for="observacao">Observação</label><textarea id="observacao"
+                            maxlength="1000" rows="3"></textarea></div>
+                </div>
+                <div class="actions"><button class="btn btn-primary" type="submit">Verificar e salvar</button><a
+                        class="btn btn-secondary" href="/alocacao-docente/minhas">Cancelar</a></div>
+                <div id="feedback" class="feedback"></div>
+            </form>
+        </section>
+    </main>
+    <dialog id="sobreposicao" class="allocation-overlap-dialog" aria-labelledby="sobreposicaoTitulo"
+        aria-describedby="sobreposicaoDescricao">
+        <div class="allocation-overlap-header">
+            <h2 id="sobreposicaoTitulo">Possível sobreposição de alocação</h2>
+            <p id="sobreposicaoDescricao">Este docente já possui alocação no mesmo dia, turno e parte do período. Confira antes de continuar.</p>
+        </div>
+        <div id="sobreposicaoLista" class="allocation-list allocation-overlap-list" tabindex="0" role="region" aria-label="Alocações existentes"></div>
+        <div id="sobreposicaoFeedback" class="feedback" role="alert"></div>
+        <div class="actions allocation-overlap-actions">
+            <button type="button" id="cancelOverlap" class="btn btn-secondary" autofocus>Cancelar</button>
+            <button type="button" id="confirmOverlap" class="btn btn-primary">Salvar mesmo assim</button>
+        </div>
+    </dialog>
+    <script src="/js/alocacao-docente-common.js"></script>
+    <script src="/js/alocacao-docente-form.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,276 @@
+/* Estilos gerais*/
+body::before {
+    content: "";
+    position: fixed;
+    top: -50px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    background-image: url('/imagens/bg-demo.svg');
+    background-size: cover;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+    
+}
+body.sala-info-visible::before {
+    opacity: 0.2;
+}
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+header {
+    border-radius: 10px;
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    
+}
+
+/* Estilos para a tabela */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: center;
+}
+
+/* Estilos para os cabeçalhos das colunas */
+thead th {
+    font-weight: bold;
+    border: 2px solid #ddd;
+    color: #000000;
+    border-color: #000000;
+}
+
+/* Estilos para as células do corpo da tabela */
+tbody td {
+    font-weight: 600;
+    vertical-align: top;
+    border: 1px solid #ddd;
+    color: #000000;
+    border-color: #000000;
+}
+
+#pesquisalimpar {
+    margin: 3px auto;
+}
+
+main {
+    
+    padding: 20px;
+    position: relative;
+    margin-bottom: 60px; /* Adiciona uma margem inferior igual à altura do rodapé */
+}
+main div label{
+    font-weight:bold;
+}
+#pesquisaprog{
+    color:#000000;
+}
+/* Estilos para a seção de salas */
+#salas {
+    display: flex; /* Ativa o layout flexbox */
+    justify-content: space-between; /* Distribui os itens igualmente ao longo do eixo principal (horizontal) */
+    align-items: center; /* Centraliza os itens verticalmente */
+    
+}
+
+    /* Estilos para o formulário de pesquisa de programas */
+    #salas > div {
+        order: 2; /* Altera a ordem do elemento para que ele apareça depois na tela */
+        margin-right: auto; /* Empurra o elemento para o lado direito */
+    }
+
+/* Estilos para o botão de limpar pesquisa */
+#pesquisalimpar {
+    order: 1; /* Altera a ordem do elemento para que ele apareça antes na tela */
+}
+
+section {
+    margin-bottom: 20px;
+}
+section h1{
+    color:#000000;
+}
+
+#lista-salas button {
+    border-radius: 5px; /* Adiciona uma pequena curvatura aos cantos dos botões */
+    background-color: #333; /* Define a cor de fundo dos botões */
+    color: #ffffff; /* Define a cor do texto dentro dos botões */
+    border: none; /* Remove as bordas dos botões */
+    padding: 10px 15px; /* Adiciona preenchimento interno aos botões */
+    margin-right: 8px; /* Adiciona espaço à direita de cada botão */   
+    margin-top: 15px;
+    cursor: pointer; /* Altera o cursor para indicar que os botões são clicáveis */
+    transition: transform 0.3s ease;
+}
+#lista-salas:houver, #listas-salas:focus{
+    left: 0;
+}
+#lista-salas button:hover{
+    
+    transform: scale(1.1);
+}
+#pesquisalimpar{
+    border-radius: 5px; /* Adiciona uma pequena curvatura aos cantos dos botões */
+    background-color: #333; /* Define a cor de fundo dos botões */
+    color: #ffffff; /* Define a cor do texto dentro dos botões */
+    border: none; /* Remove as bordas dos botões */
+    padding: 12px 20px; /* Adiciona preenchimento interno aos botões */
+    margin-right: 10px; /* Adiciona espaço à direita de cada botão */
+    margin-top: 16px;
+    cursor: pointer; /* Altera o cursor para indicar que os botões são clicáveis */
+    transition: transform 0.3s ease;
+}
+#pesquisalimpar button:hover {
+        transform: scale(1.1);
+    }
+
+
+h2 {
+    margin-top: 0;
+}
+
+ul {
+    list-style-type: none;
+    padding: 0;
+}
+.txt-animado span {
+    position: relative;
+}
+
+    .txt-animado span::before {
+        content: "";
+        color: #000000;
+        animation: palavras 8s infinite; /* Ajuste aqui para tornar mais lento */
+    }
+
+    
+
+/*@keyframes digita {
+    0%, 7% {
+        width: 0;
+    }
+
+    43%, 100% {
+        width: calc(100% + 10px);
+    }
+}
+@keyframes cursor {
+    0% {
+        border-left: 2px solid #ffffff;
+    }
+}*/
+@keyframes palavras {
+    0%, 50% {
+        content: "clique duas vezes no botão correspondente.";
+    }
+
+
+  51%,100% {
+        content: "digite no campo pesquisar programas acima.";
+    }
+    
+    
+}
+
+
+
+
+
+
+
+/* Estilos para dispositivos com tela de largura até 400px e altura até 839px */
+@media only screen and (max-width: 400px) and (max-height: 839px) {
+    header h1 {
+        font-size: 1.5em;
+    }
+
+    main {
+        padding: 10px;
+    }
+
+    /* Estilos para a seção de salas */
+    #salas {
+        flex-direction: column; /* Altera a direção do flexbox para coluna */
+    }
+
+        /* Estilos para o formulário de pesquisa de programas */
+        #salas > div {
+            order: 2; /* Mantém a ordem original do elemento */
+            margin-bottom: 10px; /* Adiciona margem inferior para separação */
+        }
+
+    /* Estilos para os botões de sala */
+    #lista-salas button {
+        margin-bottom: 5px; /* Adiciona uma pequena margem inferior entre os botões */
+    }
+
+    /* Estilos para o botão de limpar pesquisa */
+    #pesquisalimpar {
+        order: 1; /* Mantém a ordem original do elemento */
+        margin-bottom: 10px; /* Adiciona margem inferior para separação */
+    }
+
+    #recursos-info {
+        padding: 20px;
+        min-height: 70vh;
+        margin-top: 20px;
+        overflow-y: auto;
+        color: #000000;
+    }
+
+    section {
+        margin-bottom: 10px;
+    }
+   
+
+    footer {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: center;
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+    }
+
+    /* Ajustes para tornar o texto e os botões maiores */
+    button {
+        font-size: 1em;
+        padding: 10px 10px;
+    }
+}
+
+/* Adicionando espaço entre os elementos e ajustando o tamanho do conteúdo */
+#recursos-info {
+    padding: 20px;
+    min-height: 70vh;
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+/* Estilos específicos para elementos dentro de main */
+
+
+section h1 {
+    color: #000000;
+}
+
+footer {
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    margin-left: -13px;
+    padding: 10px;
+    text-align: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+ */

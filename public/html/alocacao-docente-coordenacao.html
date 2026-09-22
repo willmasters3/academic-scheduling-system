@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Painel da Coordenação — Alocação Docente</title>
+    <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg">
+    <link rel="stylesheet" href="/css/alocacao-docente.css">
+</head>
+
+<body>
+    <header class="module-header">
+        <div>
+            <h1>Painel da Coordenação</h1>
+            <p>Visão geral das alocações por docente, turma, UC e período.</p>
+        </div>
+        <nav class="module-nav"><a href="/alocacao-docente">Início do módulo</a><a href="/alocacao-docente/nova">Nova
+                Alocação</a></nav>
+    </header>
+    <main class="module-main">
+        <section class="panel">
+            <h2>Filtros</h2>
+            <form id="filtros">
+                <div class="filter-grid">
+                    <div class="field"><label for="unidade">Unidade</label><select id="unidade"></select></div>
+                    <div class="field"><label for="professor">Docente</label><select id="professor"></select></div>
+                    <div class="field"><label for="turma">Turma</label><input id="turma" placeholder="Código reduzido">
+                    </div>
+                    <div class="field"><label for="curso">Curso</label><select id="curso"></select></div>
+                    <div class="field"><label for="uc">Unidade Curricular</label><select id="uc"></select></div>
+                    <div class="field"><label for="turno">Turno</label><select id="turno">
+                            <option value="">Todos</option>
+                            <option value="MANHA">Manhã</option>
+                            <option value="TARDE">Tarde</option>
+                            <option value="NOITE">Noite</option>
+                        </select></div>
+                    <div class="field"><label for="dia">Dia</label><select id="dia">
+                            <option value="">Todos</option>
+                            <option value="1">Segunda</option>
+                            <option value="2">Terça</option>
+                            <option value="3">Quarta</option>
+                            <option value="4">Quinta</option>
+                            <option value="5">Sexta</option>
+                            <option value="6">Sábado</option>
+                        </select></div>
+                    <div class="field"><label for="tipo">Tipo</label><select id="tipo">
+                            <option value="">Todos</option>
+                            <option>PRESENCIAL</option>
+                            <option>EAD</option>
+                            <option>PREPARACAO</option>
+                        </select></div>
+                    <div class="field"><label for="data">Data dentro da vigência</label><input id="data" type="date">
+                    </div>
+                </div>
+                <div class="actions"><button class="btn btn-primary" type="submit">Aplicar filtros</button><button
+                        class="btn btn-secondary" type="button" id="limpar">Limpar</button></div>
+            </form>
+            <p class="pending-note">Filtro por sala pendente de definição funcional. Sala não integra a Alocação Docente
+                nesta fase.</p>
+            <div id="feedback" class="feedback"></div>
+        </section>
+        <section class="panel">
+            <div id="lista" class="allocation-list">
+                <p class="empty">Use os filtros para consultar.</p>
+            </div>
+        </section>
+    </main>
+    <script src="/js/alocacao-docente-common.js"></script>
+    <script src="/js/alocacao-docente-coordenacao.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+
+</html>

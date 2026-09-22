@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="600" viewBox="0 0 900 600" role="img" aria-labelledby="title desc">
+  <title id="title">Sala demo</title>
+  <desc id="desc">Imagem neutra para salas e ambientes demonstrativos.</desc>
+  <rect width="900" height="600" fill="#eef2f7"/>
+  <rect x="80" y="80" width="740" height="420" rx="24" fill="#ffffff" stroke="#cbd5e1" stroke-width="6"/>
+  <rect x="140" y="140" width="280" height="160" rx="12" fill="#dbeafe"/>
+  <rect x="480" y="140" width="280" height="160" rx="12" fill="#ccfbf1"/>
+  <path d="M160 370h580M210 430h140M390 430h140M570 430h140" stroke="#64748b" stroke-width="18" stroke-linecap="round"/>
+  <circle cx="280" cy="220" r="48" fill="#1d4ed8" opacity="0.24"/>
+  <circle cx="620" cy="220" r="48" fill="#0f766e" opacity="0.24"/>
+  <text x="450" y="548" fill="#334155" font-family="Arial, sans-serif" font-size="28" font-weight="700" text-anchor="middle">Sala Demo</text>
+</svg>

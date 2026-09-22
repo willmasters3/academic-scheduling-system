@@ -1,0 +1,129 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f4f4f4;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.topbar-filtros {
+    display: flex;
+    justify-content: center;
+    margin: 18px 0;
+}
+
+.filtro-alerta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    border: 1px solid #f1b0b7;
+    border-radius: 10px;
+    padding: 12px 16px;
+    color: #8a1f2d;
+    font-weight: 600;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    
+}
+
+thead {
+    background-color: #007BFF;
+    color: white;
+}
+
+th, td {
+    border: 1px solid #ccc;
+    padding: 10px;
+    text-align: left;
+    border: 1px solid #ddd;
+}
+.quebra-texto{
+    overflow-wrap: break-word; /* Permite quebra de palavras */
+    word-wrap: break-word; /* Permite quebra de palavras */
+}
+/* Impede quebra de linha e define uma largura mínima */
+td {
+    white-space: nowrap; /* Impede quebra de linha por padrão */
+    min-width: 100px; /* Largura mínima para garantir visibilidade */
+}
+
+td:nth-child(6) { /* Celula de informações da CPU */
+    background-color: #FFC0CB;
+    word-wrap: break-word; /* Permite quebra de palavras */
+    white-space: normal; /* Permite que o texto quebre em várias linhas */
+    min-width: 200px; /* Define uma largura mínima para a célula */
+}
+
+tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cor de fundo para linhas pares */
+}
+
+tr:hover {
+    background-color: #e2e2e2; /* Efeito ao passar o mouse */
+}
+
+th {
+    font-weight: bold;
+}
+
+td {
+    font-size: 14px;
+    color: #555;
+}
+
+td.alerta-disco {
+    color: #b00020;
+    font-weight: 700;
+}
+
+.sem-resultados {
+    text-align: center;
+    font-weight: 600;
+    color: #666;
+}
+
+/* Estilo para as células da tabela */
+td {
+    background-color: white; /* Fundo branco para as células */
+    border-radius: 5px; /* Canto arredondado */
+    transition: background-color 0.3s; /* Transição suave de cor */
+}
+
+/* Cores da tabela para colunas */
+td:nth-child(1) {
+    background-color: #FFDDC1; /* Cor para ID */
+}
+
+td:nth-child(2) {
+    background-color: #C6DEF1; /* Cor para Nome do Computador */
+}
+
+td:nth-child(3) {
+    background-color: #D5FFC4; /* Cor para Endereço MAC */
+}
+
+td:nth-child(4) {
+    background-color: #FFE4B5; /* Cor para Patrimônio */
+}
+
+td:nth-child(5) {
+    background-color: #FFF5BA; /* Cor para Data de Registro */
+}
+
+td:nth-child(7) {
+    background-color: #DDA0DD; /* Cor para Informações do Disco */
+    word-wrap: break-word; /* Permite quebra de palavras */
+    white-space: normal; /* Permite que o texto quebre em várias linhas */
+    min-width: 200px; /* Define uma largura mínima para a célula */
+}

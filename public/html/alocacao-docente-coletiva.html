@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>Alocação Coletiva</title>
+    <link rel="shortcut icon" type="image/png" href="/imagens/favicon-demo.svg">
+    <link rel="stylesheet" href="/css/alocacao-docente.css">
+    <link rel="stylesheet" href="/css/alocacao-docente-coletiva.css">
+</head>
+
+<body>
+    <header class="module-header">
+        <div>
+            <h1>Alocação Coletiva</h1>
+            <p>Cadastre uma atividade institucional para vários docentes.</p>
+        </div>
+        <nav class="module-nav"><a href="/alocacao-docente">Início do módulo</a><a
+                href="/alocacao-docente/coordenacao">Painel da Coordenação</a></nav>
+    </header>
+    <main class="module-main">
+        <section class="panel">
+            <form id="formColetiva">
+                <div class="form-grid">
+                    <div class="field"><label for="unidade">Unidade</label><select id="unidade" required></select></div>
+                    <div class="field"><label for="atividade">Nome / Atividade</label><input id="atividade"
+                            maxlength="200" required placeholder="Ex.: Grand Prix"></div>
+                    <div class="field"><label for="tipo">Tipo</label><select id="tipo" disabled>
+                            <option value="PREPARACAO">Preparação / Planejamento</option>
+                        </select><small>Único tipo atual compatível com atividade sem Curso, UC e Turma.</small></div>
+                    <fieldset class="days field">
+                        <legend>Turnos</legend>
+                        <div class="days-grid"><label><input type="checkbox" name="turnos" value="MANHA">
+                                Manhã</label><label><input type="checkbox" name="turnos" value="TARDE">
+                                Tarde</label><label><input type="checkbox" name="turnos" value="NOITE"> Noite</label>
+                        </div>
+                    </fieldset>
+                    <fieldset class="days field full">
+                        <legend>Dias da semana</legend>
+                        <div class="days-grid"><label><input type="checkbox" name="dias" value="1">
+                                Segunda</label><label><input type="checkbox" name="dias" value="2">
+                                Terça</label><label><input type="checkbox" name="dias" value="3">
+                                Quarta</label><label><input type="checkbox" name="dias" value="4">
+                                Quinta</label><label><input type="checkbox" name="dias" value="5">
+                                Sexta</label><label><input type="checkbox" name="dias" value="6"> Sábado</label></div>
+                    </fieldset>
+                    <div class="field"><label for="inicio">Data de início</label><input id="inicio" type="date"
+                            required></div>
+                    <div class="field"><label for="fim">Data de término</label><input id="fim" type="date" required>
+                    </div>
+                    <div class="field full"><label for="pesquisaProfessor">Professores</label>
+                        <div class="professor-picker"><input id="pesquisaProfessor" type="search"
+                                placeholder="Pesquisar professor..." disabled><label class="select-all"><input
+                                    id="selecionarTodos" type="checkbox" disabled> Selecionar todos os professores da
+                                unidade</label>
+                            <div id="listaProfessores" class="professor-list">
+                                <p class="empty">Selecione uma unidade.</p>
+                            </div><strong id="quantidadeSelecionada">0 professores selecionados</strong>
+                        </div>
+                    </div>
+                    <div class="field full"><label for="observacao">Observação opcional</label><textarea id="observacao"
+                            maxlength="750" rows="3"></textarea></div>
+                </div>
+                <div class="actions"><button class="btn btn-primary" type="submit">Verificar e salvar lote</button><a
+                        class="btn btn-secondary" href="/alocacao-docente">Cancelar</a></div>
+                <div id="feedback" class="feedback"></div>
+                <div id="sobreposicao" class="overlap hidden"></div>
+            </form>
+        </section>
+    </main>
+    <script src="/js/alocacao-docente-common.js"></script>
+    <script src="/js/alocacao-docente-coletiva.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+
+</html>

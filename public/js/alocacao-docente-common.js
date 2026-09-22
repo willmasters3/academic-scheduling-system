@@ -1,0 +1,10 @@
+window.AlocacaoDocente = (() => {
+    const dias = {1:'Segunda',2:'Terça',3:'Quarta',4:'Quinta',5:'Sexta',6:'Sábado'};
+    async function api(url, options={}) { const response=await fetch(url,{...options,headers:{'Content-Type':'application/json',...(options.headers||{})}}); const data=await response.json().catch(()=>({})); if(!response.ok) throw new Error(data.error||data.message||'Não foi possível concluir a operação.'); return data; }
+    function escape(value){const el=document.createElement('div');el.textContent=String(value??'');return el.innerHTML}
+    function formatDate(value){if(!value)return '—';const [y,m,d]=String(value).slice(0,10).split('-');return `${d}/${m}/${y}`}
+    function dayNames(values){return (values||[]).map(v=>dias[v]||v).join(', ')}
+    function card(item, actions=''){const atividade=String(item.observacao||'').match(/^Atividade:\s*([^\r\n]+)/i);const title=atividade?atividade[1]:(item.tipo==='PREPARACAO'?'Preparação / Planejamento':(item.unidade_curricular||'UC não informada'));return `<article class="allocation tipo-${escape(item.tipo)} ${item.ativo?'':'inativa'}"><div class="allocation-head"><div><h3>${escape(title)}</h3><span class="badge">${escape(item.tipo)}</span> <span class="badge">${item.ativo?'Ativa':'Inativa'}</span></div><div class="actions">${actions}</div></div><div class="allocation-meta"><span><b>Docente:</b> ${escape(item.nome_professor)}</span><span><b>Dias:</b> ${escape(dayNames(item.dias))}</span><span><b>Turno:</b> ${escape(item.turno)}</span><span><b>Curso:</b> ${escape(item.nome_curso||'—')}</span><span><b>Turma:</b> ${escape(item.codigo_reduzido||'—')}</span><span><b>Período:</b> ${formatDate(item.data_inicio)} a ${formatDate(item.data_fim)}</span><span><b>Carga:</b> ${item.carga_horaria_total??'—'} h</span><span><b>Unidade:</b> ${escape(item.nome_unidade||item.codigo_unidade)}</span></div></article>`}
+    function feedback(el,message,type='error'){el.textContent=message;el.className=`feedback show ${type}`}
+    return {api,escape,formatDate,dayNames,card,feedback,dias};
+})();

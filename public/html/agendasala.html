@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agendamento de Salas</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="../css/agendasala.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+<body>
+    
+    <header>
+        <div class="hiperlink-programas">
+            <a href="../">Pagina Inicial</a>
+        </div>
+        <h1>Agendar Sala</h1>
+    </header><br><br>
+    <div>
+        <button class="btn btn-success" onclick="migrarParaNovoDashboard()">Ir para o novo Dashboard</button>
+        
+    </div>
+    <main class="main-container">
+       
+        <form id="agendamentoForm" class="agendamentoForm">
+            <label for="codigo_unidade">Unidade: </label>
+            <select class="codigo_unidade" id="codigo_unidade" name="codigo_unidade"></select><br><br>
+        
+            <label for="id_sala">Sala:</label>
+            <select class="id_sala" id="id_sala" name="id_sala"></select><br><br>
+        
+            <label for="id_professor">Colaborador(a):</label>
+            <select class="id_professor" id="id_professor" name="id_professor">
+                <!-- Opções serão inseridas dinamicamente via JavaScript -->
+            </select><br><br>
+
+            <label for="dias_da_semana">Dias da Semana:</label><br>
+            <div>
+                <label><input type="checkbox" value="0"> Domingo</label>
+                <label><input type="checkbox" value="1"> Segunda</label>
+                <label><input type="checkbox" value="2"> Terça</label>
+                <label><input type="checkbox" value="3"> Quarta</label>
+                <label><input type="checkbox" value="4"> Quinta</label>
+                <label><input type="checkbox" value="5"> Sexta</label>
+                <label><input type="checkbox" value="6"> Sábado</label>
+            </div><br>
+            <div class="campo" >
+                            <label for="select_turno">Preenchimento Rápido (Turno):</label>
+                            <select id="select_turno" class="form-control">
+                                <option value="" selected>-- Selecione para preencher automático --</option>
+                                <option value="manha">Manhã (07:45 - 11:45)</option>
+                                <option value="tarde">Tarde (13:15 - 17:15)</option>
+                                <option value="noite">Noite (19:00 - 22:40)</option>
+                            </select>
+                        </div>
+
+            <label for="data_inicio">Data de Início:</label>
+            <input type="date" id="data_inicio" name="data_inicio" required><br><br>
+            
+            <label for="data_fim">Data de Fim:</label>
+            <input type="date" id="data_fim" name="data_fim" required><br><br>
+            
+            <label for="data_selecionada">Datas Selecionadas:</label>
+            <input class="data_selecionada" type="text" id="data_selecionada" name="data_selecionada" placeholder="Selecione as datas" readonly style="background-color: #fff; color: #000; cursor: pointer;"><br><br>
+
+            <button type="button" id="editarDatasSelecionadas">Editar Datas Selecionadas</button>
+            <button type="button" id="finalizarEdicaoDatas">Finalizar Edição</button>
+            
+
+            <p id="contadorDias" class="contadorDias" style="font-weight: bold;"></p>
+
+            
+        
+            <label for="hora_inicio">Hora de Início:</label>
+            <input type="time" id="hora_inicio" name="hora_inicio" required><br><br>
+            
+            <label for="hora_fim">Hora de Fim:</label>
+            <input type="time" id="hora_fim" name="hora_fim" required><br><br>
+
+            <button type="button" id="verificarAgendamentos">Verificar Conflitos</button><br><br>
+            <!-- Dentro do formulário -->
+            <button type="button" id="verificarSalas">Verificar Salas Disponíveis</button><br><br>
+
+            <button type="button" id="verMeusAgendamentos">Ver meus Agendamentos</button><br><br>
+
+            
+            <label for="id_tipo_aula">Selecione a Unidade Curricular:</label>
+            <select class="id_tipo_aula" id="id_tipo_aula" name="id_tipo_aula"></select><br><br>
+
+            <label for="motivo">Motivo/Turma:</label>
+            <textarea id="motivo" name="motivo"></textarea><br><br>
+            
+            <button type="submit">Agendar Sala</button>
+        </form>
+        <br><br>
+        <div id="resultadoVerificacao" class="resultadoVerificacao"></div><br>
+        
+        <div id="resultadoSalasDisponiveis" class="resultadoSalasDisponiveis"></div>
+        
+        
+        
+        <div id="filtros" class="mb-4">
+            <h3 style="color: white;padding-left: 50px;">FILTRAR OS MEUS AGENDAMENTOS</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="filtroSala">Sala:</label>
+                    <input type="text" id="filtroSala" class="form-control mb-2" placeholder="Digite o nome da sala..." />
+                </div>
+                
+                <div class="col-md-4">
+                    <label for="filtroDataInicio">Data de Início:</label>
+                    <input type="date" id="filtroDataInicio" class="form-control mb-2" />
+                </div>
+        
+                <div class="col-md-4">
+                    <label for="filtroDataFim">Data de Fim:</label>
+                    <input type="date" id="filtroDataFim" class="form-control mb-2" />
+                </div>
+            </div>
+        
+            <div class="row">
+                <div class="col-md-4">
+                    <label for="filtroTurno">Turno:</label>
+                    <select id="filtroTurno" class="form-control mb-2">
+                        <option value="">Todos os Turnos</option>
+                        <option value="manha">Manhã (6:00 - 12:59)</option>
+                        <option value="tarde">Tarde (13:00 - 17:15)</option>
+                        <option value="noite">Noite (17:15 - 23:59)</option>
+                    </select>
+                </div>
+        
+                <div class="col-md-4">
+                    <label for="filtroDiaSemana">Dia da Semana:</label>
+                    <select id="filtroDiaSemana" class="form-control mb-2">
+                        <option value="">Todos os Dias</option>
+                        <option value="0">Domingo</option>
+                        <option value="1">Segunda-feira</option>
+                        <option value="2">Terça-feira</option>
+                        <option value="3">Quarta-feira</option>
+                        <option value="4">Quinta-feira</option>
+                        <option value="5">Sexta-feira</option>
+                        <option value="6">Sábado</option>
+                    </select>
+                </div>
+        
+                <div class="col-md-4">
+                    <button id="aplicarFiltros" class="btn btn-primary mt-4">Aplicar Filtros</button>
+                </div>
+            </div>
+        </div>
+        
+        <br>
+        <div id="paginacao" class="paginacao">
+            <button id="botaoAnterior" style="display: none;">Anterior</button>
+            <button id="botaoProximo" style="display: none;">Próximo</button>
+        </div><br>
+        <br>
+        <!-- Botão de Excluir Selecionados -->
+        <button id="botaoExcluirSelecionados" class="btn-exclusao" style="display: none;">Excluir Selecionados</button><br>
+        <div id="agendamentosExistentes" class="agendamentosExistentes"></div>
+        
+    </main>
+
+    <footer>
+        <p>Desenvolvido pela equipe Lean Demo Unidade Centro</p>
+        <div id="informacaoSala" class="informacao-sala">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+        </div>
+    </footer>
+
+
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script src="../js/luxon.min.js"></script>
+    <script src="../js/agendamentoUtils.js"></script>
+    <script src="../js/agendasala.js"></script>
+    <script src="/js/chatbot-global.js"></script>
+    
+<script src="/js/logout-button.js"></script>
+</body>
+</html>
+
+

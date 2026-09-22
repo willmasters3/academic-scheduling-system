@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gerenciar Unidades e Salas</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/adicionaunidade.css" media="screen">
+</head>
+
+<body>
+    <main class="page-shell">
+        <header class="page-header">
+            <div>
+                <p class="eyebrow">Estrutura fisica</p>
+                <h1>Gerenciar Unidades e Salas</h1>
+                <p class="header-subtitle">
+                    Cadastre novas unidades, organize salas existentes e mantenha a estrutura de cada unidade atualizada.
+                </p>
+            </div>
+
+            <nav class="quick-links">
+                <a href="../"><i class="fas fa-home"></i> Inicio</a>
+                <a href="/altera-dados"><i class="fas fa-door-open"></i> Salas</a>
+                <a href="/agenda-sala"><i class="fas fa-calendar-plus"></i> Agendamentos</a>
+                <a href="/altera-agenda"><i class="fas fa-calendar-check"></i> Consultas</a>
+                <a href="/cadastro"><i class="fas fa-users"></i> Professores</a>
+                <a href="/adiciona-programas"><i class="fas fa-laptop-code"></i> Programas</a>
+                <a href="/unidades-curriculares"><i class="fas fa-book"></i> UCs</a>
+            </nav>
+        </header>
+
+        <section class="hero-grid">
+            <article class="card intro-card">
+                <div class="card-header">
+                    <h2>Controle de unidades</h2>
+                    <p>Os administradores podem criar, renomear e remover unidades. A coordenaÃ§Ã£o visualiza apenas o gerenciamento de salas da sua unidade.</p>
+                </div>
+
+                <div class="intro-points">
+                    <div>
+                        <strong>Cadastro centralizado</strong>
+                        <span>Estruture novas unidades com cÃ³digo e salas associadas.</span>
+                    </div>
+                    <div>
+                        <strong>GestÃ£o rÃ¡pida</strong>
+                        <span>Renomeie ou reorganize salas sem sair da tela.</span>
+                    </div>
+                    <div>
+                        <strong>Visual claro</strong>
+                        <span>Acompanhe abaixo todas as unidades visÃ­veis para o usuÃ¡rio logado.</span>
+                    </div>
+                </div>
+            </article>
+
+            <aside class="card info-card">
+                <div class="card-header">
+                    <h2>Atencao</h2>
+                </div>
+                <ul>
+                    <li>Antes de remover uma unidade, desassocie programas das salas vinculadas.</li>
+                    <li>Coordenadores podem adicionar, editar e excluir apenas salas da unidade associada.</li>
+                    <li>As unidades listadas abaixo respeitam a permissao do usuario logado.</li>
+                </ul>
+            </aside>
+        </section>
+
+        <section class="stats-grid">
+            <article class="card stat-card">
+                <span class="stat-label">Unidades visiveis</span>
+                <strong id="statTotalUnidades">0</strong>
+                <p>Unidades liberadas para o usuario autenticado.</p>
+            </article>
+
+            <article class="card stat-card">
+                <span class="stat-label">Salas academicas</span>
+                <strong id="statSalasAcademicas">0</strong>
+                <p>Espacos usados no fluxo academico.</p>
+            </article>
+
+            <article class="card stat-card">
+                <span class="stat-label">Salas administrativas</span>
+                <strong id="statSalasAdministrativas">0</strong>
+                <p>Espacos usados na estrutura administrativa.</p>
+            </article>
+        </section>
+
+        <section class="forms-grid">
+            <article class="card" id="form-criar-unidade-card">
+                <div class="card-header">
+                    <h2>Criar nova unidade</h2>
+                    <p>Cadastre a unidade e o codigo institucional.</p>
+                </div>
+
+                <form id="form-criar-unidade">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="nomeUnidade">Nome da unidade</label>
+                            <input type="text" id="nomeUnidade" placeholder="Ex.: Demo Exemplo - Cidade" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="codigoUnidade">Codigo da unidade</label>
+                            <input type="text" id="codigoUnidade" placeholder='Ex.: UC000' required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit"><i class="fas fa-plus-circle"></i> Criar unidade</button>
+                    </div>
+                </form>
+            </article>
+
+            <article class="card" id="form-renomear-unidade-card">
+                <div class="card-header">
+                    <h2>Renomear unidade</h2>
+                    <p>Atualize o nome visivel sem alterar o codigo cadastrado.</p>
+                </div>
+
+                <form id="form-renomear-unidade">
+                    <div class="form-grid single-column">
+                        <div class="form-group">
+                            <label for="codigoUnidadeRenomear">Unidade</label>
+                            <select id="codigoUnidadeRenomear"></select>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="novoNomeUnidade">Novo nome da unidade</label>
+                            <input type="text" id="novoNomeUnidade" placeholder="Digite o novo nome" required>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit"><i class="fas fa-pen"></i> Renomear unidade</button>
+                    </div>
+                </form>
+            </article>
+
+            <article class="card room-manager-card">
+                <div class="card-header">
+                    <h2>Gerenciar salas da unidade</h2>
+                    <p>Selecione uma unidade e administre salas academicas e administrativas no mesmo painel.</p>
+                </div>
+
+                <form id="form-gerenciar-salas">
+                    <div class="form-grid single-column">
+                        <div class="form-group">
+                            <label for="unidadeSelect">Selecione uma unidade</label>
+                            <select id="unidadeSelect" onchange="carregarSalas()">
+                                <option value="">-- Selecione --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="manager-grid">
+                        <section class="rooms-panel room-type-panel">
+                            <div class="rooms-panel-header">
+                                <div>
+                                    <span class="panel-tag">Academica</span>
+                                    <h3>Salas academicas</h3>
+                                </div>
+                                <p>Salas usadas em agendamento academico e laboratorios.</p>
+                            </div>
+
+                            <div id="salasAcademicasContainer" class="rooms-list empty-state">
+                                Selecione uma unidade para visualizar as salas academicas.
+                            </div>
+
+                            <div class="form-grid room-add-grid panel-add-grid">
+                                <div class="form-group form-group-grow">
+                                    <label for="novaSalaAcademicaInput">Adicionar nova sala academica</label>
+                                    <input type="text" id="novaSalaAcademicaInput" placeholder="Nome da nova sala academica">
+                                </div>
+
+                                <div class="form-actions inline-actions">
+                                    <button type="button" id="adicionarSalaAcademicaBtn"><i class="fas fa-door-open"></i> Adicionar</button>
+                                </div>
+                            </div>
+                        </section>
+
+                        <section class="rooms-panel room-type-panel administrative-panel">
+                            <div class="rooms-panel-header">
+                                <div>
+                                    <span class="panel-tag panel-tag-admin">Administrativa</span>
+                                    <h3>Salas administrativas</h3>
+                                </div>
+                                <p>Salas que aparecem no gerenciamento administrativo e vinculacoes operacionais.</p>
+                            </div>
+
+                            <div id="salasAdministrativasContainer" class="rooms-list empty-state">
+                                Selecione uma unidade para visualizar as salas administrativas.
+                            </div>
+
+                            <div class="form-grid room-add-grid panel-add-grid">
+                                <div class="form-group form-group-grow">
+                                    <label for="novaSalaAdministrativaInput">Adicionar nova sala administrativa</label>
+                                    <input type="text" id="novaSalaAdministrativaInput" placeholder="Nome da nova sala administrativa">
+                                </div>
+
+                                <div class="form-actions inline-actions">
+                                    <button type="button" id="adicionarSalaAdministrativaBtn"><i class="fas fa-briefcase"></i> Adicionar</button>
+                                </div>
+                            </div>
+                        </section>
+                    </div>
+                </form>
+            </article>
+
+            <article class="card warning-card" id="form-remover-unidade-card">
+                <div class="card-header">
+                    <h2>Remover unidade</h2>
+                    <p>Acao restrita para administradores.</p>
+                </div>
+
+                <form id="form-remover-unidade">
+                    <div class="form-grid single-column">
+                        <div class="form-group">
+                            <label for="codigoUnidadeRemover">Unidade</label>
+                            <select id="codigoUnidadeRemover"></select>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        Antes de excluir, desassocie os programas vinculados as salas para evitar erro no processo.
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="danger-button"><i class="fas fa-trash-alt"></i> Remover unidade</button>
+                    </div>
+                </form>
+            </article>
+        </section>
+
+        <section class="card units-card">
+            <div class="card-header">
+                <h2>Unidades e salas visiveis</h2>
+                <p>A listagem abaixo mostra apenas as unidades liberadas para o usuario autenticado, separando os dois tipos de sala.</p>
+            </div>
+            <div id="unidades-salas" class="units-grid"></div>
+        </section>
+
+        <footer>
+            <p>Desenvolvido pela equipe Lean Demo Unidade Centro</p>
+        </footer>
+    </main>
+
+    <script src="../js/adcionaunidade.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+</html>
+

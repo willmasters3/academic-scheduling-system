@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visualizar Sala</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/index-modern.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+</head>
+<body class="index-modern">
+    <header>
+        <nav>
+            <div class="menuToggle" id="menuToggle">
+                <button type="button" class="menu-trigger" id="menuTrigger" aria-label="Abrir menu lateral">
+                    <img src="/imagens/menu-dark.svg" alt="Menu" class="menu-icon">
+                    <p>MENU</p>
+                </button>
+                <a href="/agendar-salas" target="_blank">Agendar Salas</a>
+                <a href="html/agendamentos.html" target="_blank">Consultar Agendamentos do Dia</a>
+                <a href="html/agendas-api.html" target="_blank">Ver Todos os Agendamentos (API)</a>
+                <a href="html/gerenciarequipamentos.html" target="_blank">Inventario Demo</a>    
+            </div>
+            <div class="index-entry-clock"><i class="far fa-clock" aria-hidden="true"></i><div><time id="index-entry-date"></time><time id="index-entry-time"></time></div></div>
+        </nav>
+    </header>
+    <div class="info-geral">
+        <div class="index-hero-copy">
+        <div class="index-kicker">SISTEMA DE AGENDAMENTOS</div>
+        <h1 class="nav-title">VISUALIZAR SALAS</h1>
+        <p class="index-guidance">Acesse o MENU <span id="frase-dinamica"></span></p>
+        </div>
+        <p class="index-entry-prompt">Escolha uma opção para continuar</p>
+    </div>
+
+    <section class="index-entry" aria-label="Acessos do sistema"><div class="index-entry-cards"><a class="index-entry-card" href="/agendar-salas" target="_blank"><i class="fas fa-calendar-days entry-icon" aria-hidden="true"></i><h2>Agendar Salas</h2><p>Crie um novo agendamento de sala.</p><span class="entry-arrow" aria-hidden="true">&#8594;</span></a>
+<a class="index-entry-card" href="html/agendamentos.html" target="_blank"><i class="fas fa-file-lines entry-icon" aria-hidden="true"></i><h2>Consultar Agendamentos do Dia</h2><p>Veja os agendamentos de hoje por unidade e sala.</p><span class="entry-arrow" aria-hidden="true">&#8594;</span></a>
+<a class="index-entry-card" href="html/agendas-api.html" target="_blank"><i class="fas fa-magnifying-glass entry-icon" aria-hidden="true"></i><h2>Ver Todos os Agendamentos (API)</h2><p>Consulte a listagem completa de agendamentos.</p><span class="entry-arrow" aria-hidden="true">&#8594;</span></a>
+<a class="index-entry-card" href="html/gerenciarequipamentos.html" target="_blank"><i class="fas fa-box entry-icon" aria-hidden="true"></i><h2>Inventario Demo</h2><p>Acesse equipamentos ficticios e historico sanitizado.</p><span class="entry-arrow" aria-hidden="true">&#8594;</span></a></div><div class="index-entry-signature"><i class="fas fa-building" aria-hidden="true"></i><span>Versao demonstrativa para portfolio</span></div></section>
+    <main class="main-container">
+        <aside class="sidebar" id="sidebar">
+            <h2 class="sidebar-title">Selecione uma Unidade</h2>
+            <select id="unidadeSelect" aria-label="Selecione uma Unidade">
+                <option value="">Selecione uma unidade</option>
+            </select>
+            <div id="salasContainer" style="display:none;">
+                <h2 class="sidebar-subtitle">Salas da Unidade</h2>
+                <div id="salasButtons"></div>
+            </div>
+        </aside>
+        <section id="salaInfo">
+            <div class="section-container">
+                <h3>Informações da Sala</h3>
+                <div id="salaDetalhes"></div>
+            </div>
+            <div class="section-container">
+                <h3>A sala está agendada para:</h3>
+                <div class="agendamentosList" id="agendamentosList"></div><br>
+            </div>
+            <div class="section-container">
+                <h3>Programas da Sala</h3>
+                <input type="text" id="programaFilter" aria-label="Pesquisar programas" placeholder="Pesquisar programas...">
+                <ul id="programasList"></ul>
+            </div>
+            <div id="informacaoSala" class="informacao-sala">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+                <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            </div>
+        </section>       
+        
+    </main>
+    
+
+    <footer>
+        <p>Versao demo desenvolvida por William Pereira do Nascimento</p>
+    </footer>
+   
+<script src="/js/security-utils.js"></script>
+<script src="js/script.js"></script>
+<script src="/js/chatbot-global.js"></script>
+
+</body>
+</html>

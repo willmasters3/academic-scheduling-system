@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auditoria de Agendamentos</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="../css/auditoria-agendamentos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+    <main class="audit-shell">
+        <header class="audit-header">
+            <div>
+                <p class="audit-kicker">Controle interno</p>
+                <h1>Auditoria de Agendamentos</h1>
+                <p id="audit-subtitle">Historico de criacoes, edicoes, exclusoes, conflitos e erros relevantes.</p>
+            </div>
+            <div class="audit-actions" data-logout-container>
+                <button id="back-dashboard" class="icon-button" type="button" title="Voltar ao dashboard">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Dashboard</span>
+                </button>
+            </div>
+        </header>
+
+        <section class="summary-grid" aria-live="polite">
+            <article class="summary-item">
+                <span>Total</span>
+                <strong id="summary-total">0</strong>
+            </article>
+            <article class="summary-item accent-green">
+                <span>Criacoes</span>
+                <strong id="summary-criacoes">0</strong>
+            </article>
+            <article class="summary-item accent-blue">
+                <span>Edicoes</span>
+                <strong id="summary-edicoes">0</strong>
+            </article>
+            <article class="summary-item accent-orange">
+                <span>Exclusoes</span>
+                <strong id="summary-exclusoes">0</strong>
+            </article>
+            <article class="summary-item accent-red">
+                <span>Bloqueios</span>
+                <strong id="summary-bloqueios">0</strong>
+            </article>
+            <article class="summary-item accent-red">
+                <span>Erros</span>
+                <strong id="summary-erros">0</strong>
+            </article>
+        </section>
+
+        <section class="filters-panel">
+            <form id="audit-filters" class="filters-grid">
+                <label>
+                    <span>Inicio *</span>
+                    <input id="filter-data-inicio" type="date" required>
+                </label>
+                <label>
+                    <span>Fim *</span>
+                    <input id="filter-data-fim" type="date" required>
+                </label>
+                <label>
+                    <span>Unidade</span>
+                    <select id="filter-unidade">
+                        <option value="">Todas</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Acao</span>
+                    <select id="filter-acao">
+                        <option value="">Todas</option>
+                        <option value="CRIACAO">Criacao</option>
+                        <option value="EDICAO">Edicao</option>
+                        <option value="EXCLUSAO">Exclusao</option>
+                        <option value="CONFLITO">Conflito</option>
+                        <option value="ERRO">Erro</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Resultado</span>
+                    <select id="filter-resultado">
+                        <option value="">Todos</option>
+                        <option value="SUCESSO">Sucesso</option>
+                        <option value="PARCIAL">Parcial</option>
+                        <option value="BLOQUEADO">Bloqueado</option>
+                        <option value="ERRO">Erro</option>
+                    </select>
+                </label>
+                <label>
+                    <span>Usuario</span>
+                    <input id="filter-usuario" type="search" placeholder="Nome ou login">
+                </label>
+                <label>
+                    <span>Sala</span>
+                    <input id="filter-sala" type="search" placeholder="Nome ou ID">
+                </label>
+                <label>
+                    <span>Professor</span>
+                    <input id="filter-professor" type="search" placeholder="Nome ou ID">
+                </label>
+                <label>
+                    <span>ID agendamento</span>
+                    <input id="filter-id-agendamento" type="number" min="1" step="1" placeholder="Ex.: 1024">
+                </label>
+                <label>
+                    <span>Correlacao</span>
+                    <input id="filter-id-correlacao" type="search" placeholder="UUID do lote">
+                </label>
+                <label>
+                    <span>Por pagina</span>
+                    <select id="filter-page-size">
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+                </label>
+                <div class="filter-buttons">
+                    <button class="primary-button" type="submit">
+                        <i class="fas fa-search"></i>
+                        <span>Filtrar</span>
+                    </button>
+                    <button id="clear-filters" class="secondary-button" type="button">
+                        <i class="fas fa-eraser"></i>
+                        <span>Limpar</span>
+                    </button>
+                </div>
+            </form>
+        </section>
+
+        <section class="table-panel">
+            <div class="table-heading">
+                <div>
+                    <h2>Eventos registrados</h2>
+                    <p id="pagination-label">Pagina 1 de 1</p>
+                </div>
+                <button id="refresh-audit" class="icon-only-button" type="button" title="Atualizar lista">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+            </div>
+
+            <div class="table-scroll">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Evento</th>
+                            <th>Acao</th>
+                            <th>Resultado</th>
+                            <th>Usuario</th>
+                            <th>Alvo</th>
+                            <th>Data/Hora</th>
+                            <th>Resumo</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="audit-table-body">
+                        <tr>
+                            <td colspan="8" class="empty-cell">Selecione o periodo e clique em Filtrar.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <footer class="pagination-bar">
+                <button id="prev-page" class="secondary-button" type="button">
+                    <i class="fas fa-chevron-left"></i>
+                    <span>Anterior</span>
+                </button>
+                <span id="pagination-count">0 registros</span>
+                <button id="next-page" class="secondary-button" type="button">
+                    <span>Proxima</span>
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </footer>
+        </section>
+    </main>
+
+    <aside id="detail-panel" class="detail-panel" aria-hidden="true">
+        <button id="detail-scrim" class="detail-scrim" type="button" aria-label="Fechar detalhes"></button>
+        <section class="detail-card" role="dialog" aria-modal="true" aria-labelledby="detail-title">
+            <header class="detail-header">
+                <div>
+                    <p class="audit-kicker">Detalhes</p>
+                    <h2 id="detail-title">Evento de auditoria</h2>
+                </div>
+                <button id="close-detail" class="icon-only-button" type="button" title="Fechar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </header>
+            <div id="detail-content" class="detail-content">
+                <p class="empty-cell">Selecione um evento para ver os detalhes.</p>
+            </div>
+        </section>
+    </aside>
+
+    <script src="../js/auditoria-agendamentos.js"></script>
+    <script src="/js/logout-button.js"></script>
+</body>
+</html>

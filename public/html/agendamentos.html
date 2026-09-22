@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Adicionar Salas em Unidade Existente</title>
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+    <link rel="stylesheet" href="../css/agendamentos.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <main class="tv-page">
+        <section class="tv-topbar">
+            <div class="unidade-picker">
+                <label for="unidadeSelect">Unidade:</label>
+                <select id="unidadeSelect">
+                    <option value="">Selecione uma unidade</option>
+                </select>
+            </div>
+            <div id="contadorTurno" class="turno-counter"></div>
+        </section>
+
+        <section class="agenda-board container mt-4">
+            <h2 class="board-title text-center mt-3 mb-3">Encontre sua Sala</h2>
+
+            <div class="table-shell">
+                <table class="table table-bordered tv-table">
+                    <thead>
+                        <tr>
+                            <th>Ambiente</th>
+                            <th>Unidade Curricular</th>
+                            <th>Nome do Solicitante</th>
+                            <th>Motivo/Turma</th>
+                            <th>Hora de Início</th>
+                            <th>Hora de Fim</th>
+                        </tr>
+                    </thead>
+                    <tbody id="agendamentosList"></tbody>
+                </table>
+            </div>
+
+            <div class="pagination tv-pagination">
+                <button id="prevPage" onclick="mudarPagina(-1)">Página Anterior</button>
+                <button id="nextPage" onclick="mudarPagina(1)">Próxima Página</button>
+            </div>
+        </section>
+    </main>
+    <button id="fullscreenEnterBtn" class="fullscreen-enter-btn" type="button" aria-label="Entrar em tela cheia" title="Entrar em tela cheia">Tela cheia</button>
+    <button id="fullscreenExitBtn" class="fullscreen-exit-btn" type="button" aria-label="Sair da tela cheia" title="Sair da tela cheia">X</button>
+    <script src="/js/agendamentos.js"></script>
+    <script src="/js/agendamentos-voice-core.js"></script>
+    <script src="/js/agendamentos-voice.js"></script>
+   <!-- <footer>
+        <p>Desenvolvido pela equipe Lean Demo Unidade Centro</p>
+        <div id="informacaoSala" class="informacao-sala">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+            <img src="/imagens/logo-demo.svg" alt="Sistema Demo" class="imagem-informativa">
+        </div>
+    </footer>-->
+</body>
+</html>
+

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Página de Login</title>
+    <link rel="stylesheet" href="../css/login.css">
+    <link rel="shortcut icon" type="image/x-png" href="/imagens/favicon-demo.svg" />
+</head>
+<body>
+    <h1>Login</h1>
+    <div class="login-card">
+        <form id="loginForm" method="POST" action="/login">
+            <input type="text" name="username" placeholder="Usuário" required>
+            <input type="password" name="password" placeholder="Senha" required>
+            <button type="submit">Entrar</button>
+        </form>
+
+        <form id="temporaryPasswordForm" class="hidden" novalidate>
+            <h2>Atualize sua senha para continuar</h2>
+            <p id="temporaryPasswordMessage" class="temporary-message"></p>
+            <input type="password" id="newPassword" name="newPassword" placeholder="Nova senha" required>
+            <input type="password" id="confirmPassword" name="confirmPassword" placeholder="Confirme a nova senha" required>
+            <button type="submit">Salvar nova senha</button>
+            <p id="temporaryPasswordFeedback" class="temporary-feedback"></p>
+        </form>
+    </div>
+    <script src="../js/login.js"></script>
+</body>
+</html>
+
